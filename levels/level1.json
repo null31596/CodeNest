@@ -1,0 +1,38 @@
+[
+ {
+  "stageId": 0,
+  "cutSeen": true,
+  "question": "  اكتب; let x =5",
+  "correctAnswerEditor": "let x =5",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 1,
+  "cutSeen": true,
+  "question": " اكتب; let age = 20;",
+  "correctAnswerEditor": "let age = 20;",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 2,
+  "cutSeen": true,
+  "question": "",
+  "correctAnswerEditor": "",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ }
+]

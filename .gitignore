@@ -1,0 +1,19 @@
+# System
+.*
+!.gitignore
+
+# Node
+node_modules/
+npm-debug.log
+package-lock.json
+.gitignore.save
+# VS Code
+.vscode/
+
+# Linux / ChromeOS
+.cache/
+.config/
+.local/
+
+# Temp / test
+test/

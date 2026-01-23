@@ -1,0 +1,38 @@
+[
+ {
+  "stageId": 0,
+  "cutSeen": true,
+ "question": "اكتب; let name = 'Bob'",
+  "correctAnswerEditor": "let name = 'Bob'",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 1,
+  "cutSeen": true,
+  "question": "اكتب; let country = \"Swaziland\"",
+  "correctAnswerEditor": "let country = \"Swaziland\"",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 2,
+  "cutSeen": true,
+  "question": "",
+  "correctAnswerEditor": "",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ }
+]

@@ -1,0 +1,43 @@
+{
+  "intro0": [
+    {"text": "اهلا بك من جديد", "emotion": "Welcoming.png"},
+    {"text": "اليوم سنتعلم اول مفهوم في البرمجة الا وهو الطباعة", "emotion": "itsMe.png"},
+    {"text": "ولكن قبل هذا دعني اعرفك على الغرفة ", "emotion": "pinter.png"},
+    {"text": "في المنتصف ترى مكان ادخال الاوامر هنا ستكتب الكود ", "emotion": "standing.png"},
+    {"text": "وسترى تأثيره في النافذة الصغيرة تحت والتى تسمى ب'console'", "emotion": "standing.png"},
+    {"text": "ولكن ذلك  لن يحدث إلا لو  تضغط على 'Run'", "emotion": "but.png"},
+    {"text": "وتذكر هذه النقطة للسبب ما كثير من المبتدئين ينسون الضغط عليها ", "emotion": "standing.png"},
+    {"text": "واخيرا بعد تأكد من صحة اجابتك تضغط على متابعة ", "emotion": "pinter.png"},
+    {"text": "حسنا،جيد لنعد إلى موضوعنا", "emotion": "togather.png"},
+    {"text": "لطباعة اي شئ في  java Script  نكتب الرمز التالي ", "emotion": "standing.png"},
+    {"text": "console.log('الشيء الذي تريد كتابته مثلا اسمك ')", "emotion": "but.png"},
+    {"text": "وركز  جيدا ،عليك أن تضع الكلام بين علامتي التنصيص هذه '...'" , "emotion": "focus.png"},
+    {"text": "حسنا جرب كتابته  console.log('hello') ولا تنسى الضغط على run", "emotion": "but.png"}
+
+  ],
+  "intro1": [
+    {"text": "جيد حاول  كتابة console.log('Ben')", "emotion": "togather.png"}
+   
+  ],
+  "intro2": [
+    {"text": "فالان ساختبرك إذا كنت قد تذكرت  الرمز", "emotion": "focus.png"},
+    {"text": "حاول أن تطبع هذه الجملة hello World i am  good", "emotion": "but.png"}
+  ],
+  "intro3": [
+    {"text": "حسنا  احسنت انا لا اعرف هل اجبت على كل الاسئلة بشكل صحيح أم لا ", "emotion": "togather.png"},
+    {"text": "لكن الاهم انك انهيت الدرس ", "emotion": "standing.png"},
+    {"text": "بما انك هنا اريد ان اشرح لك شئ مهما عن الحواسيب", "emotion": "pinter.png"}, 
+    {"text": "دائما ستجدني  استغل وقت نهاية الحصة لشرح أمور مختلفة عن الحاسوب أو حتى عن أشياء أخرى لذا انتبه جيدا لهذا الكلام", "emotion": "standing.png"},
+    {"text": "الحواسيب أنها آلات غبية جدا", "emotion": "pinter.png"},
+    {"text": "نعم هي لا تفعل شيئا لم تامر عليه", "emotion": "focus.png"},
+    {"text": "دعني أعطيك مثالا لو افترضنا أني طلبت  منك أن تجلب لي ماء ", "emotion": "but.png"},
+    {"text": "سوف تقوم بجلب لي كوبا به ماء  صحيح وهذا هو المنطقي", "emotion": "pinter.png"},
+    {"text": "تخيل لو طلبنا من حاسوب نفس الشيء ", "emotion": "iHaveAquition.png"}, 
+    {"text": "في نظرك ماذا سيفعل", "emotion": "focus.png"},
+    {"text": "سيجلب لك ماء حرفيا من دون كوب ،لماذا لانك لم تحدد اين يضع الماء اليس كذالك", "emotion": "standing.png"},
+    {"text": "الحاسوب سياخد طلبك بحرفية  افهمت، انت لم تأمره  بأن يضع الماء في كوب لذا لن يفعل ذالك", "emotion": "dontWory.png"},
+    {"text": "لذا تذكر هذه الجملة جيدا' الحاسوب لا يقوم بشئ لم تأمره به'", "emotion": "but.png"}
+    
+   
+  ]
+}

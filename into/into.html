@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>codeNest intro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 2px sold red;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #1C1E33;
+            color: white;
+            position: relative;
+
+
+        }
+
+        .character_box {
+            width: 150px;
+            height: 250px;
+            justify-content: center;
+            position: absolute;
+            top: 100%;
+            display: none;
+        }
+
+        .character_box.animation {
+            display: flex;
+            width: 300px;
+            height: 300px;
+
+            position: absolute;
+            top: 100%;
+            animation: move 1s forwards;
+        }
+
+        @keyframes move {
+            0% {
+                top: 100%;
+            }
+
+            100% {
+                top: 40%;
+            }
+        }
+
+        .character_dialog {
+            width: 300px;
+            height: 100px;
+
+            position: absolute;
+            top: 100%;
+            color: black;
+            display: none;
+
+        }
+
+        .character_dialog.animation {
+            display: flex;
+            color: black;
+            width: 500px;
+            height: 250px;
+            font-size: 27px;
+            position: absolute;
+            top: 63%;
+            animation: dailogMove 1s forwards;
+        }
+
+        @keyframes dailogMove {
+            0% {
+                width: 0;
+                ;
+            }
+
+            100% {
+                width: 300;
+            }
+        }
+
+        .character_pargraphe {
+            height: 100%;
+            width: 100%;
+            z-index: 3;
+            position: absolute;
+            padding: 10px;
+        }
+
+        .character_dialog img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 2;
+        }
+
+        .character_box img {
+            width: 100%;
+            height: 100%;
+
+        }
+    </style>
+</head>
+
+<body id="body">
+    <div class="container">
+        <div class="character_box"><img src="../character/Welcoming.png" alt=""></div>
+        <div class="character_dialog">
+            <p class="character_pargraphe"></p><img src="textBoxImg.png" alt="" srcset="">
+        </div>
+    </div>
+</body>
+<script>
+    let dialog = ['hello', 'my name is null', 'i will be your guide', 'click to continue']
+    let charaterImg = ['Welcoming.png', 'itsMe.png', 'standing.png', 'pinter.png']
+    let text = '';
+    let index = 0;
+    const speed = 20;
+    let clickNum = 0;
+    let endOfAnim = false;
+    let character_box = document.querySelector('.character_box');
+    let dialog_box = document.querySelector('.character_pargraphe');
+    let character_dialog = document.querySelector('.character_dialog');
+
+
+    document.getElementById('body').addEventListener('click', function () {
+        clickNum++;
+        typeWriter(clickNum);
+        changCharater(clickNum);
+
+        if (clickNum === dialog.length) {
+            endOfAnim = true;
+            stopCharacterMove();
+        }
+    });
+
+    function changCharater(clickNum) {
+        document.querySelector('.character_box img').src = '../character/' + charaterImg[clickNum];
+    }
+
+    function typeWriter(clickNum) {
+        text = dialog[clickNum] + ' ';
+        index = 0;
+        dialog_box.innerHTML = "";
+        writeChar();
+    }
+
+    function writeChar() {
+        if (index < text.length) {
+            dialog_box.innerHTML += text.charAt(index);
+            index++;
+            setTimeout(writeChar, speed);
+        }
+    }
+
+
+    function characterMove() {
+        if (!endOfAnim) {
+            character_box.classList.add('animation');
+            character_dialog.classList.add('animation');
+        }
+    }
+
+
+    function stopCharacterMove() {
+        character_box.classList.remove('animation');
+        character_dialog.classList.remove('animation');
+
+        window.location.href = "../CodeNest.html";
+    }
+    window.onload = function () {
+        typeWriter(0);
+    };
+    characterMove();
+
+</script>
+
+</html>

@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs/editor/editor.main.css" />
+
+
+
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 2px red sold;
+        }
+
+        #stage {
+
+            max-width: 700px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            flex-direction: column;
+
+
+        }
+
+        body {
+            background-color: #181b38;
+            color: white;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+
+        }
+
+        #stageTop {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-bottom: 1.5px solid gray;
+        }
+
+        #stagedown {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 0.5px solid gray;
+            margin-top: 10px;
+        }
+
+        #stageBar {
+            display: flex;
+            justify-content: s;
+            align-items: center;
+            width: 70%;
+            height: 15px;
+        }
+
+        #stageLife {
+            display: flex;
+            flex-flow: row;
+        }
+
+        #lifeNum {
+            width: 40px;
+            height: 100%;
+            font-size: 25px;
+            text-align: center;
+            justify-self: center;
+            align-self: center;
+        }
+
+        #stageLifeIcon {
+            width: 40px;
+            height: 100%;
+        }
+
+        #stageExit {
+            width: 40px;
+            height: 40px;
+            font-size: 40px;
+            text-align: center;
+            align-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            cursor: pointer;
+
+        }
+
+        #stageSubmit {
+            height: 50px;
+            width: 70%;
+            text-align: center;
+            align-content: center;
+            font-size: 30px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            border-radius: 20px;
+            background-color: #00f100;
+            color: #5e5e5e;
+            box-shadow: #02f3029a 2px 10px 3px;
+            cursor: pointer;
+            z-index: 3;
+
+        }
+
+        #stageSubmit:active {
+            margin-top: 20px;
+            box-shadow: #02f3029a 1px 0px 3px;
+        }
+
+        #stageContainer {
+
+            height: 100%;
+        }
+
+        #stage1 {
+
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #question-box {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+        }
+
+        #question-box p {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            text-align: center;
+            align-content: center;
+            padding: 0 10px;
+            font-size: 20px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        #editor {
+            height: 100%;
+            background-color: #2e2e2e;
+            border: 1.5px solid gray;
+            color: #fff;
+            font-size: 15px;
+            padding: 7px;
+            align-content: start;
+            display: flex;
+            align-items: start;
+        }
+
+        #output {
+            width: 100%;
+            height: 40%;
+            display: flex;
+            align-content: center;
+            justify-content: start;
+            border: 1.5px solid gray;
+            background-color: #252525;
+            margin-top: 5px;
+            flex-flow: column;
+            font-size: 20px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+        }
+
+        #input {
+
+            top: 96.5px;
+            margin-left: 2px;
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2e2e2e;
+            height: 30px;
+            width: 60px;
+            text-align: center;
+            border-top: 1.5px solid gray;
+            border-right: 1.5px solid gray;
+            border-left: 1.5px solid gray;
+
+
+        }
+
+        #outputSign {
+
+
+            margin-left: 2px;
+            font-size: 15px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2e2e2e;
+            height: 20px;
+            width: 70px;
+            text-align: center;
+            border-bottom: 1.5px solid gray;
+            border-right: 1.5px solid gray;
+        }
+
+        #tools {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #run {
+            width: 30px;
+            height: 30px;
+            background-color: #2e2e2e;
+            text-align: center;
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-top: 1.5px solid gray;
+            border-right: 1.5px solid gray;
+            border-left: 1.5px solid gray;
+            cursor: pointer;
+        }
+
+        #run:active {
+            background-color: #0e0f1a;
+
+        }
+
+        #container {
+            width: 100%;
+            height: 90vh;
+            border: 1px solid #ccc;
+        }
+
+        .character_box {
+            width: 150px;
+            height: 250px;
+
+            position: absolute;
+            top: 100%;
+        }
+
+        .character_box.animation {
+            width: 250px;
+            height: 250px;
+            z-index: 1;
+            position: absolute;
+            top: 100%;
+            animation: move 1s forwards;
+            margin: auto;
+        }
+
+        @keyframes move {
+            0% {
+                top: 100%;
+            }
+
+            100% {
+                top: 40%;
+            }
+        }
+
+        .character_dialog {
+            width: 300px;
+            height: 100px;
+
+            position: absolute;
+            top: 100%;
+            color: black;
+        }
+
+        .character_dialog.animation {
+            color: black;
+            width: 300px;
+            height: 150px;
+
+            position: absolute;
+            top: 63%;
+            animation: dailogMove 1s forwards;
+        }
+
+        @keyframes dailogMove {
+            0% {
+                width: 0;
+                ;
+            }
+
+            100% {
+                width: 300;
+            }
+        }
+
+        .character_pargraphe {
+            height: 100%;
+            width: 100%;
+            z-index: 3;
+            position: absolute;
+            padding: 5px;
+        }
+
+        .character_dialog img {
+            width: 105%;
+            height: 105%;
+            position: absolute;
+            z-index: 2;
+            margin: auto;
+        }
+
+        .character_box img {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        #answerStatus {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            background-color: #262630;
+            width: 68%;
+            justify-self: center;
+            align-self: center;
+            height: 23%;
+            border: 5px solid #00ff0d;
+            border-bottom: none;
+            border-radius: 20px;
+
+            flex-direction: column;
+            z-index: 1;
+            animation: answerStatusAnim 1s forwards;
+
+        }
+
+        #answerStatus.animation {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            background-color: #262630;
+            width: 68%;
+            justify-self: center;
+            align-self: center;
+            height: 23%;
+            border: 5px solid #00ff0d;
+            border-bottom: none;
+            border-radius: 20px;
+
+            flex-direction: column;
+            z-index: 1;
+            animation: answerStatusAnim 1s forwards;
+
+        }
+
+        #answerStatus.EndAnimation {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            background-color: #262630;
+            width: 68%;
+            justify-self: center;
+            align-self: center;
+            height: 23%;
+            border: 5px solid #00ff0d;
+            border-bottom: none;
+            border-radius: 20px;
+
+            flex-direction: column;
+            z-index: 1;
+            animation: aanswerStatusAnimEnd 1s forwards;
+
+        }
+
+        #answerStatus p {
+            padding: 10px;
+
+        }
+
+        #answerStatusText {
+            font-size: 25px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: #62e268;
+        }
+
+        #answerStatusText2 {
+            font-size: 17px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: #62e268;
+        }
+
+        @keyframes answerStatusAnim {
+            0% {
+                height: 50px;
+            }
+
+            100% {
+                height: 22%;
+            }
+        }
+
+        @keyframes answerStatusAnimEnd {
+            0% {
+                height: 22%;
+            }
+
+            100% {
+                height: 50px;
+            }
+        }
+    </style>
+    <script>
+        var require = { paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs' } };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs/loader.js"></script>
+
+</head>
+
+<body id="body">
+
+    <div class="character_box"><img src="character/Welcoming.png" alt=""></div>
+    <div class="character_dialog">
+        <p class="character_pargraphe"></p><img src="into/textBoxImg.png" alt="" srcset="">
+    </div>
+    <div id="stage">
+
+
+        <div id="stageTop">
+            <div id="stageExit">X</div>
+            <div id="stageBar"></div>
+            <div id="stageLife">
+                <img src="icones Photos/iconLife.png" id="stageLifeIcon">
+                <div id="lifeNum">5</div>
+            </div>
+        </div>
+        <div id="stageContainer">
+
+            <div id="stage1" class="stage">
+                <div id="question-box">
+                    <p id="question"></p>
+                </div>
+
+                <div id="tools">
+                    <div id="input">input </div>
+                    <div id="run" onclick=" runSubmit()">run</div>
+
+                </div>
+
+                <div id="editor"></div>
+
+
+
+                <div id="output">
+                    <div id="outputSign">console</div>
+
+                </div>
+                <div id="response"></div>
+
+            </div>
+
+
+        </div>
+        <div id="stagedown">
+            <div id="stageSubmit" onclick="setSubmit()">
+                <span id="submitText">Submit</span>
+                <span id="submitSpinner" style="display:none;">
+                    <svg width="24" height="24" viewBox="0 0 50 50">
+                        <circle cx="25" cy="25" r="20" stroke="#fff" stroke-width="5" fill="none"
+                            stroke-linecap="round">
+                            <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25"
+                                dur="1s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </span>
+            </div>
+
+
+
+        </div>
+        <div id="answerStatus">
+            <p id="answerStatusText"></p>
+            <p id="answerStatusText2"></p>
+        </div>
+    </div>
+    <div id="globalLoader"
+        style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(30,30,40,0.7);align-items:center;justify-content:center;">
+        <div style="background:rgba(0,0,0,0.2);padding:30px 40px;border-radius:18px;box-shadow:0 0 20px #0002;">
+            <svg width="60" height="60" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="20" stroke="#4da6ff" stroke-width="6" fill="none" stroke-linecap="round">
+                    <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s"
+                        repeatCount="indefinite" />
+                </circle>
+            </svg>
+            <div style="color:#fff;margin-top:18px;font-size:1.2rem;text-align:center;">يرجى الانتظار...</div>
+        </div>
+    </div>
+</body>
+<script>
+    function showLoader(show = true) {
+        const loader = document.getElementById('globalLoader');
+        if (!loader) return;
+        loader.style.display = show ? 'flex' : 'none';
+    }
+
+</script>
+<script type="module">
+    //charcter animation
+
+
+    //progress bar
+    import * as acorn from "https://cdn.jsdelivr.net/npm/acorn@8.12.1/+esm";
+
+    var stageline = new ProgressBar.Line(stageBar, {
+        strokeWidth: 2.5,
+        easing: 'easeInOut',
+        duration: 1400,
+        color: '#00FF52',
+        trailColor: '#006CFF',
+        trailWidth: 2,
+        svgStyle: {
+            height: '100%',
+            width: '93%',
+
+        }
+    });
+    stageline.animate(0.5)
+
+    // stage 1
+    let editor;
+
+    require(['vs/editor/editor.main'], function () {
+
+        editor = monaco.editor.create(document.getElementById('editor'), {
+            value: '',
+            language: "javascript",
+            theme: "vs-dark"
+
+        });
+
+    });
+    let logs = ""
+    const runSubmit = () => {
+
+        const code = editor.getValue();
+        const output = document.getElementById('output');
+        output.textContent = "";
+
+        const originalLog = console.log;
+        console.log = function (...args) {
+            originalLog.apply(console, args);
+            let answer = args.join(" ");
+            output.textContent += args.join(" ") + '\n';
+            //logs;
+            logs = answer
+
+
+        };
+
+        try {
+            eval(code);
+        } catch (err) {
+            output.textContent += " error: " + err.message;
+        }
+
+        console.log = originalLog;
+        //return logs
+    };
+
+    // //Switch between stages ===> SBS
+    let i = 1;
+    let stage_dis = document.querySelectorAll('.stage')
+    for (let i = 0; i < stage_dis.length; i++) {
+        if (i == 0) {
+            stage_dis[i].style.display = 'flex'
+        } else {
+            stage_dis[i].style.display = 'none'
+        }
+    }
+    async function fetchWithRetryGet(url, retries = 3, delay = 1000) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                let response = await fetch(url);
+                if (!response.ok) throw new Error("HTTP status " + response.status);
+                const text = await response.text();
+                try {
+                    return JSON.parse(text);
+                } catch (jsonErr) {
+                    return text;
+                }
+            } catch (err) {
+                console.error(` the try ${i + 1} is fable  ${err.message}`);
+                if (i < retries - 1) {
+                    console.log(` try again after ${delay}ms...`);
+                    await new Promise(res => setTimeout(res, delay));
+                } else {
+                    throw new Error(" All attempts to fetch failed");
+                }
+            }
+        }
+    }
+    async function fetchWithRetryPost(url, options, retries = 3, delay = 200) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(" Server returned " + response.status);
+                }
+                const text = await response.text();
+                try {
+                    return JSON.parse(text);
+                } catch (jsonErr) {
+                    return text;
+                }
+            } catch (err) {
+                if (i < retries - 1) {
+                    console.warn(` Request failed. Retrying in ${delay}ms... (${retries - i - 1} left)`);
+                    await new Promise(res => setTimeout(res, delay));
+                } else {
+                    throw err;
+                }
+            }
+        }
+    }
+    function comparaitionSystem() {
+
+
+        fetchWithRetryGet('/api/comparaition/correct/answer', 5, 50)
+            .then(correctAnswerConsole => {
+                fetchWithRetryGet('/api/comparaition/user', 5, 50)
+                    .then(userAnswerImported => {
+                        fetchWithRetryGet('/api/answer/editor', 5, 50)
+                            .then(answerEditor => {
+                                function sameCode(userCode, correctCode) {
+                                    try {
+                                        const userAST = acorn.parse(userCode, { ecmaVersion: 2020 });
+                                        const correctAST = acorn.parse(correctCode, { ecmaVersion: 2020 });
+                                        function normalizeAST(ast) {
+                                            return JSON.stringify(ast, (key, value) => {
+                                                if (key === 'start' || key === 'end') {
+                                                    return undefined;
+                                                }
+                                                if (key === 'raw') {
+                                                    return undefined;
+                                                }
+
+                                                if (typeof value === 'string') {
+                                                    return value.replace(/\s+/g, ' ').trim().toLowerCase();
+                                                }
+                                                return value;
+                                            });
+                                        }
+                                        let correctSound = new Audio('sounds/success_playful.wav');
+                                        let errorSound = new Audio('sounds/error_soft.wav');
+                                        correctSound.preload = 'auto';
+                                        errorSound.preload = 'auto';
+
+                                      
+                                        document.body.addEventListener('click', function preloadSoundsOnce() {
+                                            correctSound.play().then(() => {
+                                                correctSound.pause();
+                                                correctSound.currentTime = 0;
+                                            }).catch(() => { });
+                                            errorSound.play().then(() => {
+                                                errorSound.pause();
+                                                errorSound.currentTime = 0;
+                                            }).catch(() => { });
+                                           
+                                            document.body.removeEventListener('click', preloadSoundsOnce);
+                                        });
+                                        const normUserAST = normalizeAST(userAST);
+                                        const normCorrectAST = normalizeAST(correctAST);
+                                        console.log(userCode[0])
+                                        if (normUserAST === normCorrectAST) {
+                                            fetchWithRetryPost('/api/answer/correction', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'content-type': 'application/json'
+                                                },
+                                                body: JSON.stringify({
+                                                    correctIdx: 'correct'
+                                                })
+
+                                            })
+
+                                                .then(data => {
+
+                                                    if (typeof data === 'string') {
+                                                        console.log(' Response (text):', data)
+                                                    } else {
+                                                        console.log(' Response (json):', JSON.stringify(data))
+                                                    }
+                                                })
+                                                .catch(err => console.error(' Error posting correction:', err.message));
+
+                                            questionUpdate()
+                                            answerAnimStart('good job', ' #62e268', 'I trust you can continue', '#62e268', correctSound)
+                                            // openNextLevel()
+
+                                        } else if (userCode[0] === "") {
+
+                                            fetchWithRetryPost('/api/answer/correction', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'content-type': 'application/json'
+                                                },
+                                                body: JSON.stringify({
+                                                    correctIdx: 'correct'
+                                                })
+
+
+                                            })
+
+                                                .then(data => {
+
+                                                    if (typeof data === 'string') {
+                                                        console.log(' Response (text):', data)
+                                                    } else {
+                                                        console.log(' Response (json):', JSON.stringify(data))
+                                                    }
+                                                })
+                                                .catch(err => console.error(' Error posting correction:', err.message));
+                                            stopCharacterMove()
+                                            questionUpdate()
+
+                            /////////////////////////////////////////
+                                        }
+                                        else {
+
+                                            fetchWithRetryPost('/api/answer/uncorrection', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'content-type': 'application/json'
+                                                },
+                                                body: JSON.stringify({
+                                                    correctIdx: 'uncorrect'
+                                                })
+                                            })
+                                                .then(data => {
+                                                    if (typeof data === 'string') {
+                                                        console.log(' Response (text):', data)
+                                                    } else {
+                                                        console.log(' Response (json):', JSON.stringify(data))
+                                                    }
+                                                })
+                                                .catch(err => console.error(' Error posting uncorrection:', err.message));
+                                            questionUpdate()
+                                            // openNextLevel()
+                                            answerAnimStart('wrong answer', 'red', 'try again', 'red', errorSound)
+
+                                        }
+                                    } catch (e) {
+
+                                    }
+                                }
+                                let test1 = answerEditor;
+                                let test2 = editor.getValue();
+                                sameCode(test1, test2)
+                            })
+                            .catch(err => console.error(' Error fetching /api/answer/editor:', err.message));
+                    })
+                    .catch(err => console.error(' Error fetching /api/comparaition/user:', err.message));
+            })
+            .catch(err => console.error(' Error fetching /api/comparaition/correct/answer:', err.message));
+
+
+
+    }
+
+    const setSubmit = () => {
+        document.getElementById('submitText').style.display = 'none';
+        document.getElementById('submitSpinner').style.display = 'inline-block';
+        document.getElementById('stageSubmit').style.pointerEvents = 'none'
+        document.getElementById('stageSubmit').style.opacity = '0.2';
+
+        fetch('/api/user/answer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userAnswer: logs })
+        })
+        if (document.getElementById('submitText').textContent === 'Finish') {
+            showLoader(true);
+        }
+
+
+
+
+        fetch('/api/character/cutSeen')
+            .then(response => response.json())
+            .then(cutSeen => {
+
+            })
+        comparaitionSystem()
+        characterSystem()
+
+    }
+    function hideSubmitSpinner() {
+        document.getElementById('submitText').style.display = 'inline-block';
+        document.getElementById('submitSpinner').style.display = 'none';
+        document.getElementById('stageSubmit').style.pointerEvents = 'auto'
+        document.getElementById('stageSubmit').style.opacity = '1';
+
+    }
+    function questionUpdate() {
+        fetchWithRetryGet('/api/last/level', 5, 50)
+
+            .then(stageQuestion => {
+
+                fetchWithRetryGet('/api/comletionStage', 5, 50)
+
+                    .then(completionStage => {
+                        fetchWithRetryGet('/api/character/cutSeen', 5, 50)
+                            .then(cutSeen => {
+
+                                let found = false;
+                                for (let i = 0; i < stageQuestion.length; i++) {
+
+                                    if (i === 0 && !completionStage[i]) {
+
+                                        // document.getElementById('question').textContent = stageQuestion[i]
+
+                                        if (cutSeen[0] === true) {
+                                            hideSubmitSpinner()
+                                            characterMove();
+                                            characterSystem(i)
+
+
+                                        } else {
+
+                                            stopCharacterMove();
+                                        }
+                                        found = true;
+                                        break;
+
+
+                                    } else if (completionStage[i - 1] === true && completionStage[i] === false) {
+                                        //   document.getElementById('question').textContent = stageQuestion[i]
+                                        if (cutSeen[i] === true) {
+                                            hideSubmitSpinner()
+
+                                            characterMove();
+                                            characterSystem(i)
+
+                                        } else {
+
+                                            stopCharacterMove()
+                                        }
+                                        found = true;
+                                        break
+                                    }
+
+                                }
+                                if (!found) {
+                                    document.getElementById('question').textContent = "كل المراحل مكتملة!";
+
+                                    characterMove();
+                                    characterSystem(i)
+
+                                    window.location.href = 'CodeNest.html';
+                                }
+
+                            })
+                    })
+            })
+    }
+    function characterMove() {
+        if (!window.endOfAnim) {
+            let character_box = document.querySelector('.character_box');
+            let character_dialog = document.querySelector('.character_dialog');
+            if (character_box) character_box.classList.add('animation');
+            if (character_dialog) character_dialog.classList.add('animation');
+            document.getElementById('stageSubmit').style.pointerEvents = 'none';
+
+            document.getElementById('stageSubmit').style.opacity = '0.5';
+        }
+
+    }
+
+    function stopCharacterMove() {
+        let character_box = document.querySelector('.character_box');
+        let character_dialog = document.querySelector('.character_dialog');
+        if (character_box) character_box.classList.remove('animation');
+        if (character_dialog) character_dialog.classList.remove('animation');
+        document.getElementById('stageSubmit').style.pointerEvents = 'auto';
+        document.getElementById('stageSubmit').style.opacity = '1';
+    }
+    let dialog = [];
+    let characterImg = [];
+    let text = '';
+    let index = 0;
+    const speed = 20;
+    let clickNum = 0;
+    let endOfAnim = false;
+    let currentStage = 0;
+
+    let character_box = document.querySelector('.character_box');
+    let dialog_box = document.querySelector('.character_pargraphe');
+    let character_dialog = document.querySelector('.character_dialog');
+
+
+    function characterSystem(i) {
+        fetchWithRetryGet('/api/character/dialog', 5, 50)
+            // .then(response => response.json())
+            .then(dialogData => {
+                dialog = dialogData;
+                fetchWithRetryGet('/api/character/img', 5, 50)
+                    //.then(response => response.json())
+                    .then(imgData => {
+                        characterImg = imgData;
+                        clickNum = 0;
+                        currentStage = i;
+                        typeWriter(0);
+                        changCharater(0);
+
+                    });
+            });
+    }
+
+    if (!window.bodyClickAdded) {
+        document.getElementById('body').addEventListener('click', function () {
+            clickNum++;
+            if (dialog[currentStage] && clickNum < dialog[currentStage].length) {
+                typeWriter(clickNum);
+                changCharater(clickNum);
+
+
+            }
+            if (dialog[currentStage] && clickNum === dialog[currentStage].length) {
+                endOfAnim = true;
+                stopCharacterMove();
+                fetchWithRetryGet('/api/last/level', 5, 50)
+                    .then(stageQuestion => {
+                        fetchWithRetryGet('/api/comletionStage', 5, 50)
+
+                            .then(completionStage => {
+                                for (i = 0; i < stageQuestion.length; i++) {
+                                    console.log(i)
+                                    if (i === 0 && !completionStage[i]) {
+                                        document.getElementById('question').textContent = stageQuestion[i]
+                                        if (i === completionStage.length - 1) { document.getElementById('submitText').textContent = 'Finish' }
+                                    } else if (completionStage[i - 1] === true && completionStage[i] === false) {
+                                        document.getElementById('question').textContent = stageQuestion[i]
+                                        if (i === completionStage.length - 1) { document.getElementById('submitText').textContent = 'Finish' }
+                                    }
+                                }
+                            })
+                        //console.log('end of animation'+'--->'+JSON.stringify(stageQuestion));
+
+                    })
+
+            }
+        });
+        window.bodyClickAdded = true;
+    }
+
+    function changCharater(clickNum) {
+        document.querySelector('.character_box img').src = '../character/' + dialog[currentStage][clickNum].emotion;
+
+    }
+
+    function typeWriter(clickNum) {
+        text = dialog[currentStage][clickNum].text + ' ';
+        index = 0;
+        dialog_box.innerHTML = "";
+        writeChar();
+    }
+
+    function writeChar() {
+        if (index < text.length) {
+            dialog_box.innerHTML = text.slice(0, index + 1);
+            index++;
+            setTimeout(writeChar, speed);
+        }
+    }
+
+    //characterSystem(0);
+    questionUpdate()
+
+    function answerAnimStart(text1Content, text1Color, text2Content, text2Color, soundEffect) {
+        let sound = soundEffect;
+        let answerStatus = document.getElementById('answerStatus');
+        let answerStatusText = document.getElementById('answerStatusText');
+        let answerStatusText2 = document.getElementById('answerStatusText2');
+        answerStatusText.innerHTML = text1Content;
+        answerStatusText.style.color = text1Color;
+        answerStatusText2.innerHTML = text2Content;
+        answerStatusText2.style.color = text2Color;
+
+        sound.volume = 1;
+        sound.currentTime = 0;
+        sound.play().catch(e => {
+            console.warn('لم يتم تشغيل الصوت:', e.message);
+        });
+
+        answerStatus.classList.add('animation');
+        setTimeout(() => {
+            answerStatus.classList.remove('animation');
+            answerStatus.classList.add('EndAnimation');
+            setTimeout(() => {
+                answerStatus.classList.remove('EndAnimation');
+            }, 1000);
+        }, 2000);
+    }
+    document.getElementById('stageExit').addEventListener('click', () => {
+        window.location.href = 'CodeNest.html'
+    })
+    //document.addEventListener('click',() =>{
+    //  let soundTest = new Audio('sounds/error_soft.wav')
+    //  soundTest.currentTime = 0;
+    //  soundTest.play()
+    //})
+    //window.openNextLevel = openNextLevel
+    window.characterMove = characterMove
+    window.comparaitionSystem = comparaitionSystem
+    window.questionUpdate = questionUpdate
+    window.runSubmit = runSubmit
+    window.setSubmit = setSubmit
+
+</script>
+
+</html>

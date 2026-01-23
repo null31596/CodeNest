@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
+
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: red 2px sold;
+        }
+
+        
+        #app {
+            opacity: 0;
+            transition: opacity .4s ease;
+        }
+
+        body.loaded #container {
+            opacity: 1;
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #1C1E33;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999999;
+            transition: opacity .4s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #loader-content {
+            text-align: center;
+            color: white;
+            font-family: system-ui;
+        }
+
+        #loader-icon {
+            width: 110px;
+            animation: float 1.6s infinite ease-in-out;
+            opacity: 0.95;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        #loader-text {
+            margin-top: 15px;
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+
+        #container {
+
+            max-width: 700px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+
+        }
+
+        body {
+            background: linear-gradient(#3e044b, #07033b);
+            color: white;
+            position: relative;
+            overflow: hidden;
+
+        }
+
+        #tape {
+            width: 90%;
+            height: 40px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 5px 20px;
+            border-top: 0.4px #A1A5CD solid;
+
+        }
+
+        header {
+            margin: 5px 5px;
+            display: flex;
+            align-items: center;
+
+            justify-content: space-evenly;
+            height: 40px;
+            width: 100%;
+            outline: green 2px sold;
+            border-bottom: 0.4px #A1A5CD solid;
+
+        }
+
+        header div {
+
+            width: 40px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+
+        }
+
+        #testLan {
+            height: 100%;
+            width: 70%;
+        }
+
+        #iconRobyCode,
+        #iconDeter,
+        #iconLife {
+            width: 50%;
+            height: 100%;
+        }
+
+        #iconLife {
+            height: 100%;
+        }
+
+        #robyCode {
+            width: 70px;
+            height: 100%;
+        }
+
+        #determination {
+            width: 40px;
+            height: 20px;
+        }
+
+        #life {
+            width: 35px;
+            height: 15px;
+        }
+
+        #tape div {
+            font-size: 24px;
+
+            width: 100%;
+            height: 99%;
+            text-align: center;
+            align-content: center;
+
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            cursor: pointer;
+            border-right: 1px solid #A1A5CD;
+            overflow: hiddn;
+        }
+
+        #tape img {
+            width: 40%;
+        }
+
+        #tape div :active {
+            background-color: rgba(104, 103, 103, 0.473);
+
+        }
+
+
+        #tape div:not(#home, #map, #prog, #pro) {
+            border-right: none;
+
+        }
+
+
+
+
+        #regard {
+            width: 100%;
+
+            height: 500px;
+
+        }
+
+        #content {
+            width: 100%;
+            height: 85vh;
+            overflow: auto;
+            margin-top: 0px;
+        }
+
+        #home,
+        #map,
+        #prog,
+        #pro,
+        #mor {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+
+
+
+        }
+
+        #iconHome,
+        #iconMap,
+        #iconProg,
+        #iconPro,
+        #iconMor {
+            width: 75%;
+            height: 75%;
+
+
+
+        }
+
+        #page_home {
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+
+        }
+
+        .section {
+            width: 100%;
+            gap: 10px;
+            display: flex;
+            flex-flow: column;
+            border-bottom: 1.5px solid;
+
+            margin-top: 0px;
+
+
+        }
+
+
+
+        .level {
+            width: 80px;
+            height: 80px;
+            flex-flow: column-reverse;
+            margin-top: 10px;
+            border-radius: 100%;
+            background: #057C9E;
+            border: solid 5px #02495E;
+            box-shadow: 0px 5px 0px #1C3138;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .level:active {
+            background: #B0EE00;
+            border: 5px solid #5A6833;
+            box-shadow: 0px 0px 0px #1C3138;
+        }
+
+        #identification_frame {
+            background: green;
+            width: 400px;
+            height: 55px;
+
+
+
+
+            display: flex;
+            flex-flow: column-reverse;
+            font-size: 20px;
+            margin: auto;
+            padding: 5px 5px;
+            border-bottom-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        #identification_frame div {
+            justify-content: end;
+
+        }
+
+        #page_map {
+
+
+            height: 100%;
+            width: 100%;
+            display: flex;
+
+        }
+
+        #user_info_progress,
+        #user_info_game,
+        #user_info_projects {
+            height: 33.33%;
+            border-bottom: 1px solid #494949;
+
+        }
+
+        #layer_1 {
+
+            height: 30%;
+            display: flex;
+            justify-content: space-between;
+
+        }
+
+        #layer_2 {
+
+            height: 70%;
+            margin-bottom: 10px;
+
+        }
+
+        #level_info,
+        #section_info {
+            height: 100%;
+            width: 100px;
+
+
+        }
+
+        #section_info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        #progress_bar {
+
+            width: 150px;
+            height: 100%;
+            margin: auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #grade {
+            position: absolute;
+
+
+            font-size: 40px;
+
+        }
+
+        #rank_img {
+            height: 100%;
+            margin: 0px 30px;
+        }
+
+        #user_info_game {
+            height: 20%;
+
+        }
+
+        #layer_top {
+            width: 100%;
+            height: 30%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+
+        #future_level {
+            width: 20%;
+            height: 100%;
+            display: flex;
+            justify-content: end;
+            align-items: end;
+        }
+
+        #current_level {
+            width: 20%;
+            height: 100%;
+            display: flex;
+            justify-content: start;
+            align-items: end;
+        }
+
+        #current_level_img,
+        #future_level_img {
+            height: 80%;
+            ;
+        }
+
+        #layer_dawn {
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            position: relative;
+
+
+        }
+
+        #progress_line {
+            z-index: 000;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            position: absolute;
+        }
+
+        #number_levels {
+            position: absolute;
+
+            width: 100%;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+        }
+
+        .numberLevels_S {
+            z-index: 5000;
+            margin-top: 5px;
+            width: 20px;
+
+            height: 100%;
+        }
+
+        #user_info_projects {
+
+            height: 46.77%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            overflow: auto;
+        }
+
+        .project {
+            height: 100px;
+            width: 150px;
+            margin-top: 15px;
+            display: flex;
+            position: relative;
+            align-items: end;
+            justify-content: space-evenly;
+
+        }
+
+        .imgProject {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+
+        }
+
+        .star {
+            height: 25px;
+            width: 25px;
+            z-index: 5000;
+        }
+
+        .imgStar {
+            height: 100%;
+            width: 100%;
+        }
+
+        #page_prog {
+
+            height: 100%;
+            width: 100%;
+            display: flex;
+        }
+
+        #progress_info {
+            width: 100%;
+            height: 30%;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        #user_frame {
+            width: 100%;
+            height: 70%;
+            display: flex;
+            justify-content: center;
+
+            flex-wrap: wrap;
+            overflow: auto;
+
+
+        }
+
+        #time_remaining {
+            height: 40px;
+            width: 100px;
+            text-align: center;
+            align-content: center;
+            font-size: 20px;
+            margin-top: 10px;
+            border: 0.5px solid gray;
+
+        }
+
+        #cup {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+
+        }
+
+        #cup_future {
+            border: 0.5px solid gray;
+            height: 80px;
+            width: 60px;
+
+        }
+
+        #cup_current {
+            border: 0.5px solid gray;
+            height: 95px;
+            width: 60px;
+
+        }
+
+        #cup_past {
+            border: 0.5px solid gray;
+            height: 80px;
+            width: 60px;
+
+        }
+
+        .user {
+            border: 0.5px solid gray;
+            height: 60px;
+            width: 98%;
+            display: flex;
+            justify-content: space-between;
+            margin: 4px 0;
+        }
+
+        .user_img {
+            height: 55px;
+            width: 55px;
+            border-radius: 50px;
+            margin: 5px;
+            border: 0.5px solid gray;
+        }
+
+        .user_info {
+            width: 70%;
+            display: flex;
+            flex-flow: column;
+            border: 0.5px solid gray;
+        }
+
+        .user_xp {
+            width: 50px;
+            border: 0.5px solid gray;
+        }
+
+        .user_info_name {
+            width: 25%;
+            height: 25px;
+            margin: 5px;
+            border: 0.5px solid gray;
+        }
+
+        .user_info_gmail {
+            width: 75%;
+            height: 25px;
+            margin: 0 5px;
+            border: 0.5px solid gray;
+        }
+
+        #page_prog {
+            background-color: #4F4F50;
+        }
+
+        #warning {
+            font-size: 20px;
+            color: red;
+            position: absolute;
+            margin-top: 150px;
+            text-align: center;
+        }
+
+        #page_pro {
+            height: 100%;
+            width: 100%;
+        }
+
+        #user_thumbnail {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1.5px solid #89b;
+        }
+
+        #user_profile {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            flex-flow: column;
+            border-bottom: 0.5px solid #89b;
+
+        }
+
+        #user_info_personal {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-flow: column;
+        }
+
+        #add_photo {
+            height: 75px;
+            width: 75px;
+            text-align: center;
+            align-content: center;
+            font-size: 50px;
+            color: #89b;
+
+            border-radius: 5px;
+            position: relative;
+        }
+
+        #bor_1,
+        #bor_2,
+        #bor_3,
+        #bor_4 {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #89b;
+            position: absolute;
+
+        }
+
+        #bor_1 {
+            top: 0;
+            left: 0;
+            border-right: none;
+            border-bottom: none;
+            border-top-left-radius: 5px;
+        }
+
+        #bor_2 {
+            bottom: 0;
+            left: 0;
+            border-right: none;
+            border-top: none;
+            border-bottom-left-radius: 5px;
+        }
+
+        #bor_3 {
+            top: 0;
+            right: 0;
+            border-left: none;
+            border-bottom: none;
+            border-top-right-radius: 5px;
+        }
+
+        #bor_4 {
+            bottom: 0;
+            right: 0;
+            border-left: none;
+            border-top: none;
+            border-bottom-right-radius: 5px;
+        }
+
+        #user_img_rank_name_account {
+            height: 25%;
+            width: 100%;
+
+            display: flex;
+
+        }
+
+        #user_img_rank {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        #user_name_account {
+            width: 75%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        #user_pro_img {
+
+
+            width: 100%;
+            border-radius: 100px;
+            position: relative;
+            border: 3px solid #088EB4;
+            top: -20px;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #user_pro_rank {
+            height: 30px;
+            width: 25px;
+            position: absolute;
+            bottom: -20px;
+
+        }
+
+        #user_pro_name {
+            margin-top: 10px;
+            width: 40%;
+            height: 35%;
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #user_pro_account {
+            width: 75%;
+            height: 35%;
+            border-bottom: 0.5px solid #89b;
+
+
+        }
+
+        #user_info_follower {
+
+            width: 100%;
+            height: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+
+        }
+
+        #user_info_follower div {
+            width: 100%;
+            height: 50%;
+            padding: 5px;
+            font-size: 18px;
+            text-align: center;
+            align-items: center;
+
+
+        }
+
+        #user_info_follower div:not(#user_pro_xp) {
+            border-right: 0.5px solid #89b;
+
+        }
+
+        #user_pro_achievement_box {
+            width: 70%;
+            height: 40%;
+            border-bottom: 0.5px solid #89b;
+            border-top: 1.5px solid #89b;
+
+            align-self: center;
+            margin-top: 5%;
+            border-radius: 10px;
+
+        }
+
+        #user_info_lv_box {
+            width: 100%;
+            border-bottom: 1.5px solid #89b;
+
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        #user_pro_lv {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            transform: rotate(45deg);
+            border: 1.5px solid #89b;
+            font-size: 18px;
+            background: #1C1E33;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #user_pro_lv span {
+            transform: rotate(-45deg);
+            font-weight: bold;
+
+        }
+
+        #page_mor {
+            height: 100%;
+            width: 100%;
+            display: flex;
+
+        }
+
+        #top_page {
+            height: 10%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        #title_page {
+            height: 80%;
+            width: 15%;
+            margin-left: 10px;
+
+        }
+
+        #language {
+            height: 60%;
+            width: 15%;
+            margin-right: 10px;
+            border: 1px solid #717171;
+            border-radius: 5px;
+        }
+
+        #menu {
+            width: 100%;
+            height: 85%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            overflow: auto;
+
+        }
+
+        .frame {
+            width: 40%;
+            height: 33%;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #717171;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 2px -6px 0px #717171;
+
+        }
+
+        .frame:not(#shop,#accountManagement,#support,#plan,#notifications):active {
+            box-shadow: 0px 0px 0px #717171;
+            margin-top: 6px;
+        }
+        .frame:not(#about){
+            background-color: #3f404194;
+        }
+        .frame_img {
+            width: 80%;
+            height: 70%;
+
+        }
+
+        .frame_name {
+            width: 80%;
+            height: 15%;
+            border-top: 0.5px solid #717171;
+            text-align: center;
+            align-content: center;
+            font-size: 40px;
+        }
+
+        #dawn_page {
+            width: 100%;
+            height: 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+
+        }
+
+        #dawn_page div {
+            font-size: 10px;
+            color: #98b;
+
+        }
+
+        .character_box {
+            width: 150px;
+            height: 250px;
+
+            position: absolute;
+            top: 100%;
+        }
+
+        .character_box.animation {
+            width: 250px;
+            height: 250px;
+
+            position: absolute;
+            top: 100%;
+            animation: move 1s forwards;
+        }
+
+        @keyframes move {
+            0% {
+                top: 100%;
+            }
+
+            100% {
+                top: 40%;
+            }
+        }
+
+        .character_dialog {
+            width: 300px;
+            height: 100px;
+
+            position: absolute;
+            top: 100%;
+            color: black;
+        }
+
+        .character_dialog.animation {
+            color: black;
+            width: 300px;
+            height: 150px;
+
+            position: absolute;
+            top: 63%;
+            animation: dailogMove 1s forwards;
+        }
+
+        @keyframes dailogMove {
+            0% {
+                width: 0;
+                ;
+            }
+
+            100% {
+                width: 300;
+            }
+        }
+
+        .character_pargraphe {
+            height: 100%;
+            width: 100%;
+            z-index: 3;
+            position: absolute;
+            padding: 10px;
+            
+        }
+
+        .character_dialog img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 2;
+        }
+
+        .character_box img {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .level img {
+            height: 75%;
+            color: #fff;
+
+        }
+
+        #lodingPage {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(#3e044b, #07033b);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+
+        #logo {
+            margin-top: 20%;
+        }
+
+        #lodingText {
+            margin-bottom: 17px;
+            color: white;
+            font-size: 23px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
+</head>
+<script>
+  
+  const loadingLines = [
+    "جارٍ تحميل العناصر...",
+    "نقوم بتفعيل Null...",
+    "نجهز الغرفة الأولى...",
+    "تجهيز واجهة النظام...",
+    "التحكم في الألوان...",
+    "جارٍ ترتيب الملفات..."
+  ];
+
+  let i = 0;
+  setInterval(() => {
+    document.getElementById("loader-text").textContent = loadingLines[i];
+    i = (i + 1) % loadingLines.length;
+  }, 1200); 
+
+  window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
+    document.getElementById("loader").classList.add("hidden");
+  });
+</script>
+
+<body id="body">
+    <div id="loader">
+    <div id="loader-content">
+        <img id="loader-icon" src="icones Photos/codeNest.png" alt="">
+        <p id="loader-text">جارٍ التحميل...</p>
+    </div>
+</div>
+    <div id="container">
+        <!--heade-->
+        <header id="header">
+            <div id="language_programing">
+                <img id="testLan" src="icones Photos/test.png">
+            </div>
+            <div id="level">
+                Lv 0
+            </div>
+            <div id="robyCode">
+                <img src="icones Photos/robyCode.png" id="iconRobyCode">
+                0
+            </div>
+            <div id="determination">
+                <img src="icones Photos/iconDeter.png" id="iconDeter">
+                0
+            </div>
+            <div id="life">
+                <img src="icones Photos/iconLife.png" id="iconLife">
+                0
+            </div>
+        </header>
+
+        <!--body-->
+        <div class="character_box"><img src="character/Welcoming.png" alt=""></div>
+        <div class="character_dialog">
+            <p class="character_pargraphe"></p><img src="into/textBoxImg.png" alt="" srcset="">
+        </div>
+        <div id="identification_frame">
+            <div id="name_of_section">
+                Section 1:
+            </div>
+            <div id="definition">
+                write a basic words
+            </div>
+        </div>
+        <div id="content">
+            <!--home-->
+            <div id="page_home" class="page">
+
+
+            </div>
+
+            <!--map-->
+
+
+            <div id="page_map" class="page">
+                <div id="user_info_progress">
+                    <div id="layer_1">
+                        <div id="section_info">
+                            section 1
+                        </div>
+                        <div id="level_info">
+                            <img srcset="" src="rank Photos/sketch1749773170659.png" id="rank_img">
+                        </div>
+                    </div>
+
+
+                    <div id="layer_2">
+                        <div id="progress_bar">
+                            <div id="grade">
+                                0
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div id="user_info_game">
+
+                    <div id="layer_top">
+                        <div id="current_level">
+                            <img src="rank Photos/sketch1749773170659.png" id="current_level_img">
+                        </div>
+                        <div id="future_level">
+                            <img src="rank Photos/sketch1749773170659.png" id="future_level_img">
+                        </div>
+                    </div>
+                    <div id="layer_dawn">
+                        <div id="number_levels">
+
+
+                        </div>
+
+
+                        <div id="progress_line">
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div id="user_info_projects">
+
+
+                </div>
+            </div>
+
+
+
+            <!--progress -->
+            <div id="page_prog" class="page">
+                <div id="progress_info">
+                    <p id="warning">Sorry:This page is under construction and is currently unavailable.</p>
+                    <div id="time_remaining">
+
+                    </div>
+                    <div id="cup">
+                        <div id="cup_future">
+
+                        </div>
+                        <div id="cup_current">
+
+                        </div>
+                        <div id="cup_past">
+
+                        </div>
+                    </div>
+                </div>
+                <div id="user_frame">
+
+
+
+                </div>
+            </div>
+
+
+            <!--profile -->
+            <div id="page_pro" class="page">
+                <div id="user_thumbnail">
+                    <div id="add_photo">
+                        <div id="bor_1"></div>
+                        <div id="bor_2"></div>
+                        <div id="bor_3"></div>
+                        <div id="bor_4"></div>
+                        +
+                    </div>
+                </div>
+                <div id="user_profile">
+                    <div id="user_img_rank_name_account">
+                        <div id="user_img_rank">
+                            <img id="user_pro_img">
+
+                            <div id="user_pro_rank">
+
+                            </div>
+                            </img>
+                        </div>
+                        <div id="user_name_account">
+                            <div id="user_pro_name">
+
+                                <!---->
+                               Null
+                                <!---->
+                            </div>
+                            <div id="user_pro_account">
+                                <!----> null31596@gmail.com
+                                <!---->
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="user_info_follower">
+                        <div id="user_pro_follow">
+                            follow: 0
+                        </div>
+                        <div id="user_pro_followed">
+                            folowed:0
+                        </div>
+                        <div id="user_pro_xp">
+                            0xp
+                        </div>
+                    </div>
+                    <div id="user_pro_achievement_box">
+
+                    </div>
+                </div>
+
+
+
+
+                <div id="user_info_personal">
+
+                    <div id="user_info_lv_box">
+                        <div id="user_pro_lv">
+                            <span id "span">lv 0</span>
+                        </div>
+                    </div>
+                    <div id="user_pro_joint_date">
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!--mor-->
+
+            <div id="page_mor" class="page">
+                <div id="top_page">
+                    <div id="title_page">
+                        <img src="icones Photos/codeNest.png" width="100%">
+                    </div>
+                    <div id="language">
+
+                    </div>
+
+                </div>
+                <div id="menu">
+                    <div id="accountManagement" class="frame">
+                        <div id="img_AM" class="frame_img">
+
+                        </div>
+                        <div id="name_AM" class="frame_name">
+                            Account
+                        </div>
+                    </div>
+
+
+                    <div id="shop" class="frame">
+                        <div id="img_shop" class="frame_img">
+
+                        </div>
+                        <div id="name_shop" class="frame_name">
+                            Shop
+                        </div>
+                    </div>
+
+
+
+                    <div id="notifications" class="frame">
+                        <div id="img_not" class="frame_img">
+
+                        </div>
+                        <div id="name_not" class="frame_name">
+                            Notifications
+                        </div>
+                    </div>
+
+
+
+                    <div id="support" class="frame">
+                        <div id="img_support" class="frame_img">
+
+                        </div>
+                        <div id="name_support" class="frame_name">
+                            Support
+                        </div>
+                    </div>
+
+
+                    <div id="about" class="frame">
+                        <div id="img_about" class="frame_img">
+
+                        </div>
+                        <div id="name_about" class="frame_name">
+                            About
+                           
+                        </div>
+                    </div>
+
+
+                    <div id="plan" class="frame">
+                        <div id="img_plan" class="frame_img">
+
+                        </div>
+                        <div id="name_plan" class="frame_name">
+                            Plan
+                        </div>
+                    </div>
+                </div>
+                <div id="dawn_page">
+                    <div id="copyright">
+                        <p>© 2025 NULL. All rights reserved .</p>
+
+                    </div>
+                    <div id="version">
+                        Beta version
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="tape">
+            <div id="home" onclick="SBP('page_home')"><img srcset="" src="icones Photos/iconHome.png" alt=""
+                    id="iconHome"></div>
+            <div id="map" onclick="SBP('page_map')"><img srcset="" src="icones Photos/iconMap.png" alt="" id="iconMap">
+            </div>
+            <div id="prog" onclick="SBP('page_prog')"><img srcset="" src="icones Photos/iconProg.png" alt=""
+                    id="iconProg"></div>
+            <div id="pro" onclick="SBP('page_pro')"><img id="iconPro" src="icones Photos/iconPro.png" alt="" /></div>
+            <div id="mor" onclick="SBP('page_mor')"> <img srcset="" src="icones Photos/iconMor.png" alt="" id="iconMor">
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+    </div>
+
+</body>
+<script>
+
+</script>
+<script>
+    let dialog = ['hello', 'my name is null', 'i will be your guide', 'click to continue '];
+    let charaterImg = ['Welcoming.png', 'itsMe.png', 'standing.png', 'pinter.png'];
+    let text = '';
+    let index = 0;
+    const speed = 20;
+    let clickNum = 0;
+    let endOfAnim = false;
+
+    let character_box = document.querySelector('.character_box');
+    let dialog_box = document.querySelector('.character_pargraphe');
+    let character_dialog = document.querySelector('.character_dialog');
+
+    document.getElementById('body').addEventListener('click', function () {
+        clickNum++;
+        typeWriter(clickNum);
+        changCharater(clickNum);
+
+        if (clickNum === dialog.length) {
+            endOfAnim = true;
+            stopCharacterMove();
+        }
+    });
+
+    function changCharater(clickNum) {
+        document.querySelector('.character_box img').src = '../character/' + charaterImg[clickNum];
+    }
+
+    function typeWriter(clickNum) {
+        text = dialog[clickNum] + ' ';
+        index = 0;
+        dialog_box.innerHTML = "";
+        writeChar();
+    }
+
+    function writeChar() {
+        if (index < text.length) {
+            dialog_box.innerHTML += text.charAt(index);
+            index++;
+            setTimeout(writeChar, speed);
+        }
+    }
+
+
+    function characterMove() {
+        if (!endOfAnim) {
+            character_box.classList.add('animation');
+            character_dialog.classList.add('animation');
+        }
+    }
+
+
+    function stopCharacterMove() {
+        character_box.classList.remove('animation');
+        character_dialog.classList.remove('animation');
+    }
+
+
+
+    window.onload = function () {
+        setTimeout(() => {
+            typeWriter(0);
+        }, 1000);
+    };
+
+
+
+
+    window.onload = function () {
+        if (!localStorage.getItem('visitedBefore')) {
+            setTimeout(() => {
+                window.location.href = "into/into.html";
+                characterMove(); ///<---- dont forget seting time
+            }, 500);
+            localStorage.setItem('visitedBefore', 'true');
+        } else {
+          
+        }
+    };
+
+</script>
+<script>
+    document.getElementById('about').addEventListener('click',() =>{
+        window.location.href = "about.html";
+    })
+</script>
+<script type="module" src="codeNest.js"></script>
+
+
+
+</html>
+
+</html>

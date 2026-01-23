@@ -1,0 +1,14 @@
+[
+ {
+  "stageId": 0,
+  "cutSeen": true,
+  "question": "",
+  "correctAnswerEditor": "",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ }
+]

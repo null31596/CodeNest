@@ -1,0 +1,110 @@
+[
+    {
+        "stageId": 0,
+        "cutSeen": true,
+        "question": "استخدم الدالة لإيجاد القيمة الكبرى؛ let x = Math.max(5, 2, 10, -3); console.log(x)",
+        "correctAnswerEditor": "let x = Math.max(5, 2, 10, -3); console.log(x)",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 1,
+        "cutSeen": true,
+        "question": "استخرج القيمة الكبرى؛ let y = Math.max(5, 2, 10, -3); console.log(y)",
+        "correctAnswerEditor": "let y = Math.max(5, 2, 10, -3); console.log(y)",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 2,
+        "cutSeen": true,
+        "question": "ولّد قيمة عشوائية؛ console.log(Math.random())",
+        "correctAnswerEditor": "console.log(Math.random())",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": "hello"
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 3,
+        "cutSeen": true,
+        "question": "اطبع أصغر رقم بين 7 و -2 و 50",
+        "correctAnswerEditor": "console.log(Math.min(7, -2, 50))",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": "hello"
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 4,
+        "cutSeen": true,
+        "question": "اطبع أكبر رقم بين 3 و 99 و -55",
+        "correctAnswerEditor": "console.log(Math.max(3, 99, -55))",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": "hello"
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 5,
+        "cutSeen": true,
+        "question": "اطبع رقماً عشوائياً بين 0 و 5",
+        "correctAnswerEditor": "console.log(Math.random() * 5)",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": "hello"
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 6,
+        "cutSeen": true,
+        "question": "جرب كتابته  console.log('hello')",
+        "correctAnswerEditor": "console.log('hello')",
+        "correctAnswerConsole": "hello",
+        "userAnswerDetect": {
+            "userAnswer": "hello"
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 7,
+        "cutSeen": true,
+        "question": "اطبع رقماً عشوائياً بين 10 و 20",
+        "correctAnswerEditor": "console.log(Math.random() * (20 - 10) + 10)",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": "hello"
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 8,
+        "cutSeen": true,
+        "question": "",
+        "correctAnswerEditor": "",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    }
+]
