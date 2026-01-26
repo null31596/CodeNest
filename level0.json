@@ -1,0 +1,50 @@
+[
+ {
+  "stageId": 0,
+  "cutSeen": true,
+  "question": " جرب كتابته  console.log('hello')",
+  "correctAnswerEditor": "console.log('hello')",
+  "correctAnswerConsole": "hello",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 1,
+  "cutSeen": true,
+  "question": " جرب كتابته  console.log('Ben')",
+  "correctAnswerEditor": "console.log('Ben')",
+  "correctAnswerConsole": "hello",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 2,
+  "cutSeen": true,
+  "question": " جرب طباعه 'hello World i am  good'",
+  "correctAnswerEditor": "console.log('hello World i am  good')",
+  "correctAnswerConsole": "hello World i am  good",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 3,
+  "cutSeen": true,
+  "question": "",
+  "correctAnswerEditor": "",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ }
+]
