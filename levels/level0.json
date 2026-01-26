@@ -8,8 +8,8 @@
   "userAnswerDetect": {
    "userAnswer": ""
   },
-  "correction": "correct",
-  "completionStage": true
+  "correction": "",
+  "completionStage": false
  },
  {
   "stageId": 1,
@@ -20,8 +20,8 @@
   "userAnswerDetect": {
    "userAnswer": ""
   },
-  "correction": "correct",
-  "completionStage": true
+  "correction": "",
+  "completionStage": false
  },
  {
   "stageId": 2,
