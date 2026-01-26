@@ -9,6 +9,7 @@ let JSONImportDataUser = require('./dataUser.json');
 const { request } = require('https');
 let i = 0;
 let m = 0;
+const PORT = process.env.PORT || 3000;
 //let dataUser = []
 //let dataUserObj = {
 //  name: 'mohamed',
@@ -77,8 +78,6 @@ const cors = require('cors')
 app.use(cors({ origin: '*' }))
 
 app.get('/', (request, response) => {
-
-
   response.sendFile(path.join(__dirname, 'CodeNest.html'))
 })
 const sectionName = 'section0'; 
@@ -594,11 +593,14 @@ app.get('/api/character/cutSeen/Id', (request, response) => {
 
 })
 
-app.listen('2023', 'localhost', () => {
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is running on port ${PORT}`);
 
-  console.log('http://' + 'localhost' + ':' + '2023')
-  console.log('http://' + 'localhost' + ':' + '2023' + '/stage.html')
-})
+  console.log('http://' + 'localhost' + ':' + PORT + '/CodeNest.html')
+  console.log('http://' + 'localhost' + ':' + PORT + '/stage.html')
+
+});
+
 
 let dataLevelJSON = JSON.stringify(dataLevel, null, 2);
 
