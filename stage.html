@@ -412,6 +412,44 @@
                 height: 50px;
             }
         }
+
+        #lastInfo {
+            width: 300px;
+            height: 100px;
+            margin-top: 10px;
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        #lastInfo div:not(.infoTitle) {
+            height: 80px;
+            width: 80px;
+            border: 1.5px solid rgba(117, 116, 116, 0.572);
+            border-radius: 10px;
+
+        }
+
+        #lastInfo div .infoTitle {
+            height: 20px;
+            text-align: center;
+        }
+
+        #lastInfo div .infoContent {
+            height: 60px;
+            width: 95%;
+            text-align: center;
+            margin: auto;
+            align-content: center;
+            font-size: 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border: 1.5px solid rgba(117, 116, 116, 0.572);
+            background-color: rgb(30, 30, 40);
+
+        }
     </style>
     <script>
         var require = { paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs' } };
@@ -487,7 +525,7 @@
         </div>
     </div>
     <div id="globalLoader"
-        style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(30,30,40,0.7);align-items:center;justify-content:center;">
+        style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgb(30, 30, 40);align-items:center;justify-content:center;flex-direction: column;">
         <div style="background:rgba(0,0,0,0.2);padding:30px 40px;border-radius:18px;box-shadow:0 0 20px #0002;">
             <svg width="60" height="60" viewBox="0 0 50 50">
                 <circle cx="25" cy="25" r="20" stroke="#4da6ff" stroke-width="6" fill="none" stroke-linecap="round">
@@ -496,6 +534,23 @@
                 </circle>
             </svg>
             <div style="color:#fff;margin-top:18px;font-size:1.2rem;text-align:center;">يرجى الانتظار...</div>
+        </div>
+
+        <div id="lastInfo">
+            <div id="infoTimeBox" style="background-color: #03ae03;">
+                <div id="infoTimeTitle" class="infoTitle">Time</div>
+                <div id="infoTimeContent" class="infoContent">3:00</div>
+            </div>
+
+            <div id="infoXPBox" style="background-color: #035eae;">
+                <div id="infoXPTitle" class="infoTitle">XP</div>
+                <div id="infoXPContent" class="infoContent">15</div>
+            </div>
+            <div id="infoRobyBox" style="background-color: #ae0303;">
+                <div id="infoRobyTitle" class="infoTitle">Roby</div>
+                <div id="infoRobyContent" class="infoContent">30</div>
+            </div>
+
         </div>
     </div>
 </body>
@@ -508,6 +563,7 @@
 
 </script>
 <script type="module">
+    //showLoader(true)
     //charcter animation
 
 
@@ -658,7 +714,7 @@
                                         correctSound.preload = 'auto';
                                         errorSound.preload = 'auto';
 
-                                      
+
                                         document.body.addEventListener('click', function preloadSoundsOnce() {
                                             correctSound.play().then(() => {
                                                 correctSound.pause();
@@ -668,7 +724,7 @@
                                                 errorSound.pause();
                                                 errorSound.currentTime = 0;
                                             }).catch(() => { });
-                                           
+
                                             document.body.removeEventListener('click', preloadSoundsOnce);
                                         });
                                         const normUserAST = normalizeAST(userAST);
@@ -726,7 +782,7 @@
                                             stopCharacterMove()
                                             questionUpdate()
 
-                            /////////////////////////////////////////
+                                            /////////////////////////////////////////
                                         }
                                         else {
 
@@ -785,6 +841,7 @@
         })
         if (document.getElementById('submitText').textContent === 'Finish') {
             showLoader(true);
+            
         }
 
 
@@ -807,6 +864,7 @@
 
     }
     function questionUpdate() {
+        
         fetchWithRetryGet('/api/last/level', 5, 50)
 
             .then(stageQuestion => {
@@ -828,7 +886,7 @@
                                             hideSubmitSpinner()
                                             characterMove();
                                             characterSystem(i)
-
+                                            
 
                                         } else {
 
@@ -942,10 +1000,10 @@
                                     console.log(i)
                                     if (i === 0 && !completionStage[i]) {
                                         document.getElementById('question').textContent = stageQuestion[i]
-                                        if (i === completionStage.length - 1) { document.getElementById('submitText').textContent = 'Finish' }
+                                        if (i === completionStage.length - 1) { document.getElementById('submitText').textContent = 'Finish'; timeStop() }
                                     } else if (completionStage[i - 1] === true && completionStage[i] === false) {
                                         document.getElementById('question').textContent = stageQuestion[i]
-                                        if (i === completionStage.length - 1) { document.getElementById('submitText').textContent = 'Finish' }
+                                        if (i === completionStage.length - 1) { document.getElementById('submitText').textContent = 'Finish'; timeStop() }
                                     }
                                 }
                             })
@@ -1015,6 +1073,58 @@
     //  soundTest.play()
     //})
     //window.openNextLevel = openNextLevel
+
+    //time
+    let timer = null;
+    let startTime = 0;
+    let isRunning = false;
+    let elapsdTime = 0;
+    
+
+    const timeStart = () => {
+        if (!isRunning) {
+            startTime = Date.now();
+            timer = setInterval(timeUpdate, 10)
+            isRunning = true;
+          
+
+        }
+
+    }
+    const timeStop = () => {
+        if (isRunning) {
+            clearInterval(timer)
+            elapsdTime = Date.now() - startTime;
+            isRunning = false
+        }
+    }
+   
+    function timeUpdate() {
+        elapsdTime = Date.now() - startTime
+
+
+        let hour = Math.floor(elapsdTime / (1000 * 60 * 60))
+
+        let minut = Math.floor(elapsdTime / (1000 * 60) % 60)
+        let second = Math.floor(elapsdTime / 1000 % 60)
+        let timeSave = `${hour}:${minut}:${second}`
+        localStorage.setItem('timeKye', timeSave)
+        localStorage.setItem('timeStatue', isRunning)
+        document.getElementById('infoTimeContent').innerHTML = minut +':'+second;
+        
+    }
+   timeStart()
+
+
+
+
+
+
+
+
+
+
+
     window.characterMove = characterMove
     window.comparaitionSystem = comparaitionSystem
     window.questionUpdate = questionUpdate
