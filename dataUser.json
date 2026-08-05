@@ -4,7 +4,9 @@
   "age": 25,
   "acount": "exemple@gmail.com",
   "lastLevel": {
-   "lastLevelIdx": 0
-  }
+   "lastLevelIdx": 4
+  },
+  "roby": 200,
+  "xp": 100
  }
 ]

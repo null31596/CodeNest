@@ -1,15 +1,8 @@
 let express = require('express')
 let path = require('path')
 let app = express();
-let http = require('http');
 let fs = require('fs');
-const { error } = require('console');
-let JSONImportData = require('./data.json');
-let JSONImportDataUser = require('./dataUser.json');
-const { request } = require('https');
-let i = 0;
-let m = 0;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 //let dataUser = []
 //let dataUserObj = {
 //  name: 'mohamed',
@@ -18,22 +11,29 @@ const PORT = process.env.PORT || 3000;
 //  lastLevel: {
 //    lastLevelIdx: 0
 //  },
+// "roby":0,
+// "xp":0
 //
 //}
 //
 //dataUser.push(dataUserObj)
 //fs.writeFileSync('dataUser.json', JSON.stringify(dataUser, null, 1), 'utf-8')
-const dataLevel = [];
-let levelnum = 7
-for (let i = 0; i < 1; i++) {
-
-  let levelsArr = []
-
-  for (let m = 0; m < levelnum; m++) {
-    let levelname = 'level' + m;
 
 
-   
+// Build the default (all-locked) level structure used to seed data.json the
+// very first time the server runs. This used to also run unconditionally at
+// the bottom of the file, which overwrote real player progress on every
+// restart -- it is now only written when data.json does not exist yet.
+if (!fs.existsSync('./data.json')) {
+  const dataLevel = [];
+  let levelnum = 7
+  for (let i = 0; i < 1; i++) {
+
+    let levelsArr = []
+
+    for (let m = 0; m < levelnum; m++) {
+      let levelname = 'level' + m;
+
       let levelObj = {
         [levelname]: {
           'status': 'locked',
@@ -43,69 +43,64 @@ for (let i = 0; i < 1; i++) {
         }
       }
       levelsArr.push(levelObj)
-    
-      
-    
-  }
-  if (i === 0) {
-    let sectionName = 'section' + i;
+    }
 
+    let sectionName = 'section' + i;
     let dataObj = {
       [sectionName]: levelsArr,
       situation: 'locked',
       completion: false
     }
     dataLevel.push(dataObj);
-  } else {
-    let sectionName = 'section' + i;
-
-    let dataObj = {
-      [sectionName]: levelsArr,
-      situation: 'locked',
-      completion: false
-    };
-    dataLevel.push(dataObj);
   }
+
+  fs.writeFileSync('./data.json', JSON.stringify(dataLevel, null, 2), 'utf-8');
 }
 
+let JSONImportData = require('./data.json');
+let JSONImportDataUser = require('./dataUser.json');
 
 
 
-// server
+
+// levels server
 app.use(express.static(__dirname));
 app.use(express.json());
-const cors = require('cors')
+const cors = require('cors');
+const { request } = require('http');
 app.use(cors({ origin: '*' }))
 
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'CodeNest.html'))
 })
-const sectionName = 'section0'; 
+const sectionName = 'section0';
 const lastIdx = JSONImportDataUser[0].lastLevel.lastLevelIdx;
 
 for (let i = 0; i < lastIdx; i++) {
-    const levelName = 'level' + i;
-    JSONImportData[0][sectionName][i][levelName].status = 'open';
+  const levelName = 'level' + i;
+  JSONImportData[0][sectionName][i][levelName].status = 'open';
 
 }
 
 fs.writeFileSync('data.json', JSON.stringify(JSONImportData, null, 2), 'utf-8');
- for (i = 0; i < JSONImportData.length; i++) {
-    
-    for (m = 0; m < JSONImportData[i][sectionName].length; m++) {
-      var levelName = 'level' + JSONImportDataUser[0].lastLevel.lastLevelIdx;
-    JSONImportData[i][sectionName][JSONImportDataUser[0].lastLevel.lastLevelIdx][levelName].status ='open';
-    
-    }
+
+// Also make sure the player's current level itself (not just the ones
+// before it) is open.
+{
+  const currentLevelName = 'level' + lastIdx;
+  if (JSONImportData[0][sectionName][lastIdx]) {
+    JSONImportData[0][sectionName][lastIdx][currentLevelName].status = 'open';
   }
-  fs.writeFileSync('data.json', JSON.stringify(JSONImportData, null, 2), 'utf-8');
+}
+fs.writeFileSync('data.json', JSON.stringify(JSONImportData, null, 2), 'utf-8');
+
 app.get('/api/levels', (request, response) => {
 
   const allStatus = []
-  for (i = 0; i < JSONImportData.length; i++) {
-    var sectionName = 'section' + i;
-    for (m = 0; m < JSONImportData[i][sectionName].length; m++) {
-      var levelName = 'level' + m;
+  for (let i = 0; i < JSONImportData.length; i++) {
+    const sectionName = 'section' + i;
+    for (let m = 0; m < JSONImportData[i][sectionName].length; m++) {
+      const levelName = 'level' + m;
       allStatus.push(JSONImportData[i][sectionName][m][levelName].status)
     }
 
@@ -114,63 +109,17 @@ app.get('/api/levels', (request, response) => {
   response.json(allStatus)
 })
 
-app.get('/api/levels/update', (request, response) => {
-
-  const allStatus = []
-  for (i = 0; i < JSONImportData.length; i++) {
-    var sectionName = 'section' + i;
-    for (m = 0; m < JSONImportData[i][sectionName].length; m++) {
-      var levelName = 'level' + m;
-      allStatus.push(JSONImportData[i][sectionName][m][levelName].status)
-    }
-
-  }
-
-  response.json(allStatus)
-})
 app.get('/api/progress', (request, response) => {
   const allProgress = [];
   for (let i = 0; i < JSONImportData.length; i++) {
-    var sectionName = 'section' + i;
+    const sectionName = 'section' + i;
     for (let m = 0; m < JSONImportData[i][sectionName].length; m++) {
-      var levelName = 'level' + m;
+      const levelName = 'level' + m;
       allProgress.push(JSONImportData[i][sectionName][m][levelName].progress);
     }
   }
   response.json(allProgress);
 });
-
-app.get('/api/situation', (request, response) => {
-
-  const allSituation = []
-  for (let i = 0; i < JSONImportData.length; i++) {
-    var sectionName = 'section' + i;
-
-
-    allSituation.push(JSONImportData[i].situation)
-
-  }
-  response.json(allSituation)
-})
-app.get('/api/section/open', (request, response) => {
-  const newSituation = []
-  for (let i = 0; i < JSONImportData.length; i++) {
-    var sectionName = 'section' + i;
-    newSituation.push(JSONImportData[i].situation)
-
-  }
-  response.json(newSituation);
-})
-
-app.get('/api/section/colored', (request, response) => {
-  const coloredSituation = []
-  for (let i = 0; i < JSONImportData.length; i++) {
-    var sectionName = 'section' + i;
-    coloredSituation.push(JSONImportData[i].situation)
-
-  }
-  response.json(coloredSituation);
-})
 
 app.get('/api/completion/opened', (request, response) => {
   const openedComletion = [];
@@ -181,7 +130,7 @@ app.get('/api/completion/opened', (request, response) => {
   response.json(openedComletion);
 })
 
-
+// satage server
 app.get('/api/last/level', (request, response) => {
   try {
 
@@ -211,16 +160,26 @@ app.get('/api/last/level/id', (request, response) => {
 
 })
 app.get('/api/comletionStage', (request, response) => {
-  const JSONImportDataUser = require('./dataUser.json');
-  const levelLast = JSONImportDataUser[0].lastLevel.lastLevelIdx;
-  const dataStage = 'levels/level' + levelLast + '.json';
-  const JSONImportDataStage = JSON.parse(fs.readFileSync(dataStage, 'utf-8'));
-  let completionStage = []
-  for (let i = 0; i < JSONImportDataStage.length; i++) {
-    completionStage.push(JSONImportDataStage[i].completionStage);
+  try {
+    const JSONImportDataUser = JSON.parse(fs.readFileSync('dataUser.json', 'utf-8'));
+    const levelLast = JSONImportDataUser[0]?.lastLevel?.lastLevelIdx;
+    if (levelLast === undefined) {
+      throw new Error('lastLevelIdx is missing in dataUser.json');
+    }
+    const dataStage = 'levels/level' + levelLast + '.json';
+    if (!fs.existsSync(dataStage)) {
+      throw new Error(`File not found: ${dataStage}`);
+    }
+    const JSONImportDataStage = JSON.parse(fs.readFileSync(dataStage, 'utf-8'));
+    let completionStage = []
+    for (let i = 0; i < JSONImportDataStage.length; i++) {
+      completionStage.push(JSONImportDataStage[i].completionStage);
 
+    }
+    response.json(completionStage);
+  } catch (err) {
+    response.status(500).json({ error: err.message });
   }
-  response.json(completionStage);
 })
 app.post('/api/user/answer', (request, response) => {
   const JSONImportDataUser = JSON.parse(fs.readFileSync('dataUser.json', 'utf-8'));
@@ -267,11 +226,11 @@ app.post('/api/answer/correction', (request, response) => {
       JSONImportDataStageUpdate[nextIdx].completionStage = true;
       JSONImportData[0]['section0'][levelIdx]['level' + levelIdx].progress = true//<-------
       if (JSONImportData[0]['section0'][levelIdx + 1]) {
-        JSONImportData[0]['section0'][levelIdx + 1]['level' + (levelIdx + 1)].status = 'open'; 
+        JSONImportData[0]['section0'][levelIdx + 1]['level' + (levelIdx + 1)].status = 'open';
       }
       JSONImportDataUser[0].lastLevel.lastLevelIdx = JSONImportDataUser[0].lastLevel.lastLevelIdx + 1;
       JSONImportData[0]['section0'][JSONImportDataUser[0].lastLevel.lastLevelIdx]['level' + JSONImportDataUser[0].lastLevel.lastLevelIdx].status = 'open';
-      
+
       fs.writeFileSync('data.json', JSON.stringify(JSONImportData, null, 1), 'utf-8')
       fs.writeFileSync('dataUser.json', JSON.stringify(JSONImportDataUser, null, 1), 'utf-8')
 
@@ -290,6 +249,10 @@ app.post('/api/answer/uncorrection', (request, response) => {
     const uncorrectAnswer = request.body.correctIdx;
     const JSONImportDataUser = JSON.parse(fs.readFileSync('dataUser.json', 'utf-8'));
     const levelLast = JSONImportDataUser[0]?.lastLevel?.lastLevelIdx;
+    if (levelLast === undefined) throw new Error('lastLevelIdx is missing');
+    const dataStage = 'levels/level' + levelLast + '.json';
+    if (!fs.existsSync(dataStage)) throw new Error(`File not found: ${dataStage}`);
+    const JSONImportDataStageUpdate = JSON.parse(fs.readFileSync(dataStage, 'utf-8'));
     let nextIdx = 0;
     for (let i = 0; i < JSONImportDataStageUpdate.length; i++) {
       if (!JSONImportDataStageUpdate[i].completionStage) {
@@ -297,14 +260,10 @@ app.post('/api/answer/uncorrection', (request, response) => {
         break;
       }
     }
+    if (!Array.isArray(JSONImportDataStageUpdate) || !JSONImportDataStageUpdate[nextIdx]) throw new Error('Stage data missing');
     if (JSONImportDataStageUpdate[nextIdx].completionStage) {
       return response.json({ message: 'كل المراحل مكتملة!' });
     }
-    if (levelLast === undefined) throw new Error('lastLevelIdx is missing');
-    const dataStage = 'levels/level' + levelLast + '.json';
-    if (!fs.existsSync(dataStage)) throw new Error(`File not found: ${dataStage}`);
-    const JSONImportDataStageUpdate = JSON.parse(fs.readFileSync(dataStage, 'utf-8'));
-    if (!Array.isArray(JSONImportDataStageUpdate) || !JSONImportDataStageUpdate[nextIdx]) throw new Error('Stage data missing');
     JSONImportDataStageUpdate[nextIdx].correction = uncorrectAnswer;
     fs.writeFileSync(dataStage, JSON.stringify(JSONImportDataStageUpdate, null, 1), 'utf-8');
     if (JSONImportDataStageUpdate[nextIdx].correction === 'uncorrect') {
@@ -335,8 +294,6 @@ app.post('/api/Status/update', (request, response) => {
   } else {
     response.status(400).json({ error: 'Invalid section or level index' });
   }
-
-  response.sendStatus(200);
 })
 
 app.post('/api/situation/update', (request, response) => {
@@ -424,13 +381,6 @@ app.get('/api/answer/editor', (req, response) => {
     response.status(500).json({ error: err.message });
   }
 });
-
-
-app.use((err, req, res, next) => {
-  console.error(' Express Uncaught Error:', err);
-  res.status(500).json({ error: 'Internal Server Error', details: err.message });
-});
-
 
 
 app.get('/api/comparaition/correct/answer', (request, response) => {
@@ -553,7 +503,7 @@ app.get('/api/character/img', (request, response) => {
     //console.log(JSONImportDataDialog[introId].emotion)
   }
 
-   response.json(characterimg)
+  response.json(characterimg)
 })
 
 //app.get('/api/character/img', (request, response) => {
@@ -589,20 +539,72 @@ app.get('/api/character/cutSeen', (request, response) => {
 
   response.json(cutseenArr)
 })
-app.get('/api/character/cutSeen/Id', (request, response) => {
+
+app.get('/api/robyCode', (request, response) => {
+  let robyArr = [];
+  const sectionName = 'section0';
+  const lastIdx = JSONImportDataUser[0].lastLevel.lastLevelIdx;
+
+  for (let i = 0; i <= lastIdx; i++) {
+    const levelName = 'level' + i;
+    let roby = JSONImportData[0][sectionName][i][levelName].robyCode;
+    robyArr.push(roby);
+
+  }
+  response.json(robyArr);
+})
+app.post('/api/store/roby', (request, response) => {
+  const robyStore = request.body.robyReward;
+  //fs.writeFileSync('dataUser.json', JSON.stringify(JSONImportDataUser, null, 1), 'utf-8')
+  
+  JSONImportDataUser[0].roby += robyStore;
+  fs.writeFileSync('dataUser.json', JSON.stringify(JSONImportDataUser, null, 1), 'utf-8');
+  response.sendStatus(200);
+
+})
+app.get('/api/roby/show', (request, response) => {
+  let getRoby = [];
+  let totalRoby = JSONImportDataUser[0].roby;
+  getRoby.push(totalRoby);
+  response.json(getRoby);
+})
+app.get('/api/XP', (request, response) => {
+  const XPArr = [];
+  const sectionName = 'section0';
+  const lastIdx = JSONImportDataUser[0].lastLevel.lastLevelIdx;
+ for(let i = 0; i<= lastIdx; i++){
+  const levelName = 'level' +i;
+  let XP = JSONImportData[0][sectionName][i][levelName].xpAcquired;
+  XPArr.push(XP);
+
+ }
+ response.json(XPArr);
+})
+app.post('/api/store/XP', (request , response) =>{
+  const XPStore = request.body.XPReward;
+  
+  JSONImportDataUser[0].xp += XPStore;
+  
+  fs.writeFileSync('dataUser.json', JSON.stringify(JSONImportDataUser, null, 1), 'utf-8');
+  response.sendStatus(200);
+
 
 })
 
-app.listen(PORT, "0.0.0.0", () => {
+// Error-handling middleware must be registered after all routes -- Express
+// only routes errors to middleware defined after the route that threw.
+app.use((err, req, res, next) => {
+  console.error(' Express Uncaught Error:', err);
+  if (res.headersSent) {
+    return next(err);
+  }
+  res.status(500).json({ error: 'Internal Server Error', details: err.message });
+});
+
+app.listen(PORT, "localhost", () => {
   console.log(`Server is running on port ${PORT}`);
 
   console.log('http://' + 'localhost' + ':' + PORT + '/CodeNest.html')
   console.log('http://' + 'localhost' + ':' + PORT + '/stage.html')
 
 });
-
-
-let dataLevelJSON = JSON.stringify(dataLevel, null, 2);
-
-
-fs.writeFileSync('data.json', dataLevelJSON)

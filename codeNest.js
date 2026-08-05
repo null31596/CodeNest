@@ -3,6 +3,8 @@
 
 
 
+
+
 let levelNum = 7
 
 let dataLevels = []
@@ -251,9 +253,7 @@ const checkLevels = () => {
     fetch('/api/levels')
         .then(response => response.json())
         .then(status => {
-            fetch('/api/section/colored')
-                .then(response => response.json())
-                .then(situation => {
+            
                     status.forEach((statusValue, idx) => {
                         var levelAll = document.querySelectorAll('.level');
                         const sectionIdx = Math.floor(idx / 9);
@@ -289,7 +289,7 @@ const checkLevels = () => {
                             //levelAll[idx].style.backgroundColor = 'red';
                         }
                     });
-                });
+                
         });
 }
 
@@ -401,9 +401,7 @@ const oneLevels = (id) => {
 
 const changeSituation = (id) => {
 
-    fetch('/api/situation')
-        .then(response => response.json())
-        .then(situation => {
+   
 
             let idx = parseInt(id.replace('level', ''));
             let sectionIdx = Math.floor(idx / levelNum);
@@ -421,7 +419,7 @@ const changeSituation = (id) => {
 
             })
 
-        })
+        
 
 }
 
@@ -435,9 +433,6 @@ const openSection = (id) => {
                     .then(response => response.json())
                     .then(status => {
 
-                        fetch('/api/progress')
-                            .then(response => response.json())
-                            .then(progress => {
                                 let idx = parseInt(id.replace('level', ''))
                                 let sectionIdx = Math.floor(idx / levelNum);
 
@@ -459,7 +454,7 @@ const openSection = (id) => {
                                 } else if (completionValue === false) {
                                    
                                 }
-                            })
+                            
                     })
             })
         })
@@ -475,8 +470,19 @@ levelId.forEach(level => {
 })
 
 openSection()
-//window.openLevels = openLevels
 
+//robyshow
+showRoby()
+let robyCodeTotal = document.getElementById("robyCodeTotal");
+function showRoby(){
+    fetch('/api/roby/show')
+    .then(response => response.json())
+    .then(totalRoby => {
+       robyCodeTotal.innerHTML = totalRoby;
+    })
+}
+//window.openLevels = openLevels
+window.showRoby = showRoby;
 window.openSection = openSection;
 window.clickLevel = clickLevel;
 window.oneLevels = oneLevels;

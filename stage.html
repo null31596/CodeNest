@@ -539,16 +539,16 @@
         <div id="lastInfo">
             <div id="infoTimeBox" style="background-color: #03ae03;">
                 <div id="infoTimeTitle" class="infoTitle">Time</div>
-                <div id="infoTimeContent" class="infoContent">3:00</div>
+                <div id="infoTimeContent" class="infoContent"></div>
             </div>
 
             <div id="infoXPBox" style="background-color: #035eae;">
                 <div id="infoXPTitle" class="infoTitle">XP</div>
-                <div id="infoXPContent" class="infoContent">15</div>
+                <div id="infoXPContent" class="infoContent"></div>
             </div>
             <div id="infoRobyBox" style="background-color: #ae0303;">
                 <div id="infoRobyTitle" class="infoTitle">Roby</div>
-                <div id="infoRobyContent" class="infoContent">30</div>
+                <div id="infoRobyContent" class="infoContent"></div>
             </div>
 
         </div>
@@ -563,9 +563,48 @@
 
 </script>
 <script type="module">
-    //showLoader(true)
+   //showLoader(true)
     //charcter animation
+    //time
+    let timer = null;
+    let startTime = 0;
+    let isRunning = false;
+    let elapsdTime = 0;
 
+
+    const timeStart = () => {
+        if (!isRunning) {
+            startTime = Date.now();
+            timer = setInterval(timeUpdate, 10)
+            isRunning = true;
+
+
+        }
+
+    }
+    const timeStop = () => {
+        if (isRunning) {
+            clearInterval(timer)
+            elapsdTime = Date.now() - startTime;
+            isRunning = false
+        }
+    }
+
+    function timeUpdate() {
+        elapsdTime = Date.now() - startTime
+
+
+        let hour = Math.floor(elapsdTime / (1000 * 60 * 60))
+
+        let minut = Math.floor(elapsdTime / (1000 * 60) % 60)
+        let second = Math.floor(elapsdTime / 1000 % 60)
+        let timeSave = `${hour}:${minut}:${second}`
+        localStorage.setItem('timeKye', timeSave)
+        localStorage.setItem('timeStatue', isRunning)
+        document.getElementById('infoTimeContent').innerHTML = minut + ':' + second;
+
+    }
+    timeStart()
 
     //progress bar
     import * as acorn from "https://cdn.jsdelivr.net/npm/acorn@8.12.1/+esm";
@@ -658,6 +697,7 @@
             }
         }
     }
+
     async function fetchWithRetryPost(url, options, retries = 3, delay = 200) {
         for (let i = 0; i < retries; i++) {
             try {
@@ -841,7 +881,8 @@
         })
         if (document.getElementById('submitText').textContent === 'Finish') {
             showLoader(true);
-            
+            addRoby();
+            addXP();
         }
 
 
@@ -853,7 +894,7 @@
 
             })
         comparaitionSystem()
-        characterSystem()
+
 
     }
     function hideSubmitSpinner() {
@@ -864,7 +905,7 @@
 
     }
     function questionUpdate() {
-        
+
         fetchWithRetryGet('/api/last/level', 5, 50)
 
             .then(stageQuestion => {
@@ -886,7 +927,7 @@
                                             hideSubmitSpinner()
                                             characterMove();
                                             characterSystem(i)
-                                            
+
 
                                         } else {
 
@@ -965,7 +1006,9 @@
         fetchWithRetryGet('/api/character/dialog', 5, 50)
             // .then(response => response.json())
             .then(dialogData => {
+
                 dialog = dialogData;
+                
                 fetchWithRetryGet('/api/character/img', 5, 50)
                     //.then(response => response.json())
                     .then(imgData => {
@@ -1074,57 +1117,55 @@
     //})
     //window.openNextLevel = openNextLevel
 
-    //time
-    let timer = null;
-    let startTime = 0;
-    let isRunning = false;
-    let elapsdTime = 0;
+
+    // add roby
+    let robyContent = document.getElementById('infoRobyContent');
+
     
+    function addRoby() {
+        fetch('/api/robyCode')
+            .then(response => response.json())
+            .then(roby => {
+                let robyReward = roby[roby.length - 1];
+                //////////////////////////////////////////
+                // her its be the roby discount function//
+                //////////////////////////////////////////
+                robyContent.innerHTML = JSON.stringify(robyReward);
 
-    const timeStart = () => {
-        if (!isRunning) {
-            startTime = Date.now();
-            timer = setInterval(timeUpdate, 10)
-            isRunning = true;
-          
-
-        }
+                fetch('/api/store/roby', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({robyReward})
+                })
+            })
 
     }
-    const timeStop = () => {
-        if (isRunning) {
-            clearInterval(timer)
-            elapsdTime = Date.now() - startTime;
-            isRunning = false
-        }
-    }
-   
-    function timeUpdate() {
-        elapsdTime = Date.now() - startTime
-
-
-        let hour = Math.floor(elapsdTime / (1000 * 60 * 60))
-
-        let minut = Math.floor(elapsdTime / (1000 * 60) % 60)
-        let second = Math.floor(elapsdTime / 1000 % 60)
-        let timeSave = `${hour}:${minut}:${second}`
-        localStorage.setItem('timeKye', timeSave)
-        localStorage.setItem('timeStatue', isRunning)
-        document.getElementById('infoTimeContent').innerHTML = minut +':'+second;
+    //add XP 
+    
+    let XPContent = document.getElementById('infoXPContent');
+    function addXP(){
         
+        fetch('/api/XP')
+        .then(response => response.json())
+        .then(XP => {
+            let XPReward = XP[XP.length-1];
+          
+            /////////////////////////////////////////
+            // her its be the XP discount function //
+            /////////////////////////////////////////
+          XPContent.innerHTML = JSON.stringify(XPReward)
+          fetch('/api/store/XP',{
+              method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({XPReward})
+        
+          })
+        })
     }
-   timeStart()
-
-
-
-
-
-
-
-
-
-
-
     window.characterMove = characterMove
     window.comparaitionSystem = comparaitionSystem
     window.questionUpdate = questionUpdate
