@@ -134,7 +134,7 @@ app.get('/api/completion/opened', (request, response) => {
 app.get('/api/last/level', (request, response) => {
   try {
 
-    const JSONImportDataUser = require('./dataUser.json');
+   const JSONImportDataUser = JSON.parse(fs.readFileSync('dataUser.json', 'utf-8'));
     const levelLast = JSONImportDataUser[0].lastLevel.lastLevelIdx;
     const dataStage = 'levels/level' + levelLast + '.json';
     const JSONImportDataStage = JSON.parse(fs.readFileSync(dataStage, 'utf-8'));
@@ -153,7 +153,7 @@ app.get('/api/last/level', (request, response) => {
 });
 app.get('/api/last/level/id', (request, response) => {
   let lastLevelId = []
-  const JSONImportDataUser = require('./dataUser.json');
+const JSONImportDataUser = JSON.parse(fs.readFileSync('dataUser.json', 'utf-8'));
   const levelLast = JSONImportDataUser[0].lastLevel.lastLevelIdx;
   lastLevelId.push(levelLast)
   response.json(lastLevelId)
@@ -467,7 +467,7 @@ app.get('/api/next/level/completionStage', (request, response) => {
 
 app.get('/api/character/dialog', (request, response) => {
   let dialog = []
-  const JSONImportDataUser = require('./dataUser.json');
+ const JSONImportDataUser = JSON.parse(fs.readFileSync('dataUser.json', 'utf-8'));
   const levelLast = JSONImportDataUser[0].lastLevel.lastLevelIdx;
   const dataDialog = 'dialogs/dialog' + levelLast + '.json';
   const JSONImportDataDialog = JSON.parse(fs.readFileSync(dataDialog, 'utf-8'));
@@ -483,7 +483,7 @@ app.get('/api/character/dialog', (request, response) => {
 })
 app.get('/api/character/img', (request, response) => {
   let characterimg = []
-  const JSONImportDataUser = require('./dataUser.json');
+ const JSONImportDataUser = JSON.parse(fs.readFileSync('dataUser.json', 'utf-8'));
   const levelLast = JSONImportDataUser[0].lastLevel.lastLevelIdx;
   const dataDialog = 'dialogs/dialog' + levelLast + '.json';
   const JSONImportDataDialog = JSON.parse(fs.readFileSync(dataDialog, 'utf-8'));
@@ -590,7 +590,20 @@ app.post('/api/store/XP', (request , response) =>{
 
 
 })
+app.get('/api/level/id', (request, response) => {
+  const arr_ID = [];
+  const JSONImportDataUser = JSON.parse(fs.readFileSync('dataUser.json', 'utf-8'));
+  const levelLast = JSONImportDataUser[0].lastLevel.lastLevelIdx;
+  const dataStage = 'levels/level' + levelLast + '.json';
+  const JSONImportDataStage = JSON.parse(fs.readFileSync(dataStage, 'utf-8'));
+  for (let i = 0; i < JSONImportDataStage.length; i++) {
+    arr_ID.push(JSONImportDataStage[i].stageId);
+   // console.log(arr_ID);
+   
+  }
+ response.json(arr_ID);
 
+})
 // Error-handling middleware must be registered after all routes -- Express
 // only routes errors to middleware defined after the route that threw.
 app.use((err, req, res, next) => {
