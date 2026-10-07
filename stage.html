@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs/editor/editor.main.css" />
+
+
+
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 2px red sold;
+        }
+
+        #stage {
+
+            max-width: 700px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            flex-direction: column;
+
+
+        }
+
+        body {
+            background-color: #181b38;
+            color: white;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+
+        }
+
+        #stageTop {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-bottom: 1.5px solid gray;
+        }
+
+        #stagedown {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 0.5px solid gray;
+            margin-top: 10px;
+        }
+
+        #stageBar {
+            display: flex;
+            justify-content: s;
+            align-items: center;
+            width: 70%;
+            height: 15px;
+        }
+
+        #stageLife {
+            display: flex;
+            flex-flow: row;
+        }
+
+        #lifeNum {
+            width: 40px;
+            height: 100%;
+            font-size: 25px;
+            text-align: center;
+            justify-self: center;
+            align-self: center;
+        }
+
+        #stageLifeIcon {
+            width: 40px;
+            height: 100%;
+        }
+
+        #stageExit {
+            width: 40px;
+            height: 40px;
+            font-size: 40px;
+            text-align: center;
+            align-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            cursor: pointer;
+
+        }
+
+        #stageSubmit {
+            height: 50px;
+            width: 70%;
+            text-align: center;
+            align-content: center;
+            font-size: 30px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            border-radius: 20px;
+            background-color: #00f100;
+            color: #5e5e5e;
+            box-shadow: #02f3029a 2px 10px 3px;
+            cursor: pointer;
+            z-index: 3;
+
+        }
+
+        #stageSubmit:active {
+            margin-top: 20px;
+            box-shadow: #02f3029a 1px 0px 3px;
+        }
+
+        #stageContainer {
+
+            height: 100%;
+        }
+
+        #stage1 {
+
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #question-box {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+        }
+
+        #question-box p {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            text-align: center;
+            align-content: center;
+            padding: 0 10px;
+            font-size: 20px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        #editor {
+            height: 100%;
+            background-color: #2e2e2e;
+            border: 1.5px solid gray;
+            color: #fff;
+            font-size: 15px;
+            padding: 7px;
+            align-content: start;
+            display: flex;
+            align-items: start;
+        }
+
+        #output {
+            width: 100%;
+            height: 40%;
+            display: flex;
+            align-content: center;
+            justify-content: start;
+            border: 1.5px solid gray;
+            background-color: #252525;
+            margin-top: 5px;
+            flex-flow: column;
+            font-size: 20px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+        }
+
+        #input {
+
+            top: 96.5px;
+            margin-left: 2px;
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2e2e2e;
+            height: 30px;
+            width: 60px;
+            text-align: center;
+            border-top: 1.5px solid gray;
+            border-right: 1.5px solid gray;
+            border-left: 1.5px solid gray;
+
+
+        }
+
+        #outputSign {
+
+
+            margin-left: 2px;
+            font-size: 15px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2e2e2e;
+            height: 20px;
+            width: 70px;
+            text-align: center;
+            border-bottom: 1.5px solid gray;
+            border-right: 1.5px solid gray;
+        }
+
+        #tools {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #run {
+            width: 30px;
+            height: 30px;
+            background-color: #2e2e2e;
+            text-align: center;
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border-top: 1.5px solid gray;
+            border-right: 1.5px solid gray;
+            border-left: 1.5px solid gray;
+            cursor: pointer;
+        }
+
+        #run:active {
+            background-color: #0e0f1a;
+
+        }
+
+        #container {
+            width: 100%;
+            height: 90vh;
+            border: 1px solid #ccc;
+        }
+
+        .character_box {
+            width: 150px;
+            height: 250px;
+
+            position: absolute;
+            top: 100%;
+        }
+
+        .character_box.animation {
+            width: 250px;
+            height: 250px;
+            z-index: 1;
+            position: absolute;
+            top: 100%;
+            animation: move 1s forwards;
+            margin: auto;
+        }
+
+        @keyframes move {
+            0% {
+                top: 100%;
+            }
+
+            100% {
+                top: 40%;
+            }
+        }
+
+        .character_dialog {
+            width: 300px;
+            height: 100px;
+
+            position: absolute;
+            top: 100%;
+            color: black;
+        }
+
+        .character_dialog.animation {
+            color: black;
+            width: 300px;
+            height: 150px;
+
+            position: absolute;
+            top: 63%;
+            animation: dailogMove 1s forwards;
+        }
+
+        @keyframes dailogMove {
+            0% {
+                width: 0;
+                ;
+            }
+
+            100% {
+                width: 300;
+            }
+        }
+
+        .character_pargraphe {
+            height: 100%;
+            width: 100%;
+            z-index: 3;
+            position: absolute;
+            padding: 5px;
+        }
+
+        .character_dialog img {
+            width: 105%;
+            height: 105%;
+            position: absolute;
+            z-index: 2;
+            margin: auto;
+        }
+
+        .character_box img {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        #answerStatus {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            background-color: #262630;
+            width: 68%;
+            justify-self: center;
+            align-self: center;
+            height: 23%;
+            border: 5px solid #00ff0d;
+            border-bottom: none;
+            border-radius: 20px;
+
+            flex-direction: column;
+            z-index: 1;
+            animation: answerStatusAnim 1s forwards;
+
+        }
+
+        #answerStatus.animation {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            background-color: #262630;
+            width: 68%;
+            justify-self: center;
+            align-self: center;
+            height: 23%;
+            border: 5px solid #00ff0d;
+            border-bottom: none;
+            border-radius: 20px;
+
+            flex-direction: column;
+            z-index: 1;
+            animation: answerStatusAnim 1s forwards;
+
+        }
+
+        #answerStatus.EndAnimation {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            background-color: #262630;
+            width: 68%;
+            justify-self: center;
+            align-self: center;
+            height: 23%;
+            border: 5px solid #00ff0d;
+            border-bottom: none;
+            border-radius: 20px;
+
+            flex-direction: column;
+            z-index: 1;
+            animation: aanswerStatusAnimEnd 1s forwards;
+
+        }
+
+        #answerStatus p {
+            padding: 10px;
+
+        }
+
+        #answerStatusText {
+            font-size: 25px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: #62e268;
+        }
+
+        #answerStatusText2 {
+            font-size: 17px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: #62e268;
+        }
+
+        @keyframes answerStatusAnim {
+            0% {
+                height: 50px;
+            }
+
+            100% {
+                height: 22%;
+            }
+        }
+
+        @keyframes answerStatusAnimEnd {
+            0% {
+                height: 22%;
+            }
+
+            100% {
+                height: 50px;
+            }
+        }
+
+        #lastInfo {
+            width: 300px;
+            height: 100px;
+            margin-top: 10px;
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        #lastInfo div:not(.infoTitle) {
+            height: 80px;
+            width: 80px;
+            border: 1.5px solid rgba(117, 116, 116, 0.572);
+            border-radius: 10px;
+            margin: 0px 7px;
+
+        }
+
+        #lastInfo div .infoTitle {
+            height: 20px;
+            text-align: center;
+        }
+
+        #lastInfo div .infoContent {
+            height: 60px;
+            width: 95%;
+            text-align: center;
+            margin: auto;
+            align-content: center;
+            font-size: 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border: 1.5px solid rgba(117, 116, 116, 0.572);
+            background-color: rgb(30, 30, 40);
+
+        }
+    </style>
+    <script>
+        var require = { paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs' } };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.43.0/min/vs/loader.js"></script>
+
+</head>
+
+<body id="body">
+
+    <div class="character_box"><img src="character/Welcoming.png" alt=""></div>
+    <div class="character_dialog">
+        <p class="character_pargraphe"></p><img src="into/textBoxImg.png" alt="" srcset="">
+    </div>
+    <div id="stage">
+
+
+        <div id="stageTop">
+            <div id="stageExit">X</div>
+            <div id="stageBar"></div>
+            <div id="stageLife">
+                <img src="icones Photos/iconLife.png" id="stageLifeIcon">
+                <div id="lifeNum">5</div>
+            </div>
+        </div>
+        <div id="stageContainer">
+
+            <div id="stage1" class="stage">
+                <div id="question-box">
+                    <p id="question"></p>
+                </div>
+
+                <div id="tools">
+                    <div id="input">input </div>
+                    <div id="run" onclick=" runSubmit()">run</div>
+
+                </div>
+
+                <div id="editor"></div>
+
+
+
+                <div id="output">
+                    <div id="outputSign">console</div>
+
+                </div>
+                <div id="response"></div>
+
+            </div>
+
+
+        </div>
+        <div id="stagedown">
+            <div id="stageSubmit" onclick="setSubmit()">
+                <span id="submitText">Submit</span>
+                <span id="submitSpinner" style="display:none;">
+                    <svg width="24" height="24" viewBox="0 0 50 50">
+                        <circle cx="25" cy="25" r="20" stroke="#fff" stroke-width="5" fill="none"
+                            stroke-linecap="round">
+                            <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25"
+                                dur="1s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </span>
+            </div>
+
+
+
+        </div>
+        <div id="answerStatus">
+            <p id="answerStatusText"></p>
+            <p id="answerStatusText2"></p>
+        </div>
+    </div>
+    <div id="globalLoader"
+        style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgb(30, 30, 40);align-items:center;justify-content:center;flex-direction: column;">
+        <div style="background:rgba(0,0,0,0.2);padding:30px 40px;border-radius:18px;box-shadow:0 0 20px #0002;">
+            <svg width="60" height="60" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="20" stroke="#4da6ff" stroke-width="6" fill="none" stroke-linecap="round">
+                    <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s"
+                        repeatCount="indefinite" />
+                </circle>
+            </svg>
+            <div style="color:#fff;margin-top:18px;font-size:1.2rem;text-align:center;">يرجى الانتظار...</div>
+        </div>
+
+        <div id="lastInfo">
+            <div id="infoTimeBox" style="background-color: #03ae03;">
+                <div id="infoTimeTitle" class="infoTitle">Time</div>
+                <div id="infoTimeContent" class="infoContent"></div>
+            </div>
+
+            <div id="infoXPBox" style="background-color: #035eae;">
+                <div id="infoXPTitle" class="infoTitle">XP</div>
+                <div id="infoXPContent" class="infoContent"></div>
+            </div>
+            <div id="infoRobyBox" style="background-color: #ae0303;">
+                <div id="infoRobyTitle" class="infoTitle">Roby</div>
+                <div id="infoRobyContent" class="infoContent"></div>
+            </div>
+            <div id="infoRPBox" style="background-color: #aa9704;">
+                <div id="infoRPTitle" class="infoTitle">RP</div>
+                <div id="infoRPContent" class="infoContent"></div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    function showLoader(show = true) {
+        const loader = document.getElementById('globalLoader');
+        if (!loader) return;
+        loader.style.display = show ? 'flex' : 'none';
+    }
+
+</script>
+<script type="module" src="stage.js"></script>
+
+
+</html>

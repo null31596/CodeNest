@@ -1,0 +1,63 @@
+[
+ {
+  "stageId": 0,
+  "cutSeen": true,
+  "question": "اكتب; let num = Math.round(5.76); console.log(num)",
+  "correctAnswerEditor": "let num = Math.round(5.76); console.log(num)",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 1,
+  "cutSeen": true,
+  "question": "اكتب; let x = 4.2; let num = Math.round(x); console.log(num)",
+  "correctAnswerEditor": "let x = 4.2; let num = Math.round(x); console.log(num)",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 2,
+  "cutSeen": true,
+ "question": "اكتب; console.log(Math.ceil(1.0000001))",
+  "correctAnswerEditor": "console.log(Math.ceil(1.0000001))",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 3,
+  "cutSeen": true,
+  "question": "اكتب; let r = Math.floor(4.9999999); console.log(r)",
+  "correctAnswerEditor": "let r = Math.floor(4.9999999); console.log(r)",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  "correction": "",
+  "completionStage": false
+ },
+ {
+  "stageId": 4,
+  "cutSeen": true,
+  "question": "",
+  "correctAnswerEditor": "",
+  "correctAnswerConsole": "",
+  "userAnswerDetect": {
+   "userAnswer": ""
+  },
+  
+  "completionStage": false,
+  "correction": ""
+ }
+]

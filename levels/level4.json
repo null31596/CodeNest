@@ -1,0 +1,74 @@
+[
+    {
+        "stageId": 0,
+        "cutSeen": true,
+        "question": "اكتب; console.log(3 + 3)",
+        "correctAnswerEditor": "console.log(3 + 3)",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 1,
+        "cutSeen": true,
+        "question": "اكتب; let x = 5; let y = 7; console.log(x * y)",
+        "correctAnswerEditor": "let x = 5; let y = 7; console.log(x * y)",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 2,
+        "cutSeen": true,
+        "question": " xوy اطبع قسمه 12 / 4 على شكل متغيرات",
+        "correctAnswerEditor": "let x = 12; let y = 4; console.log(x / y);",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 3,
+        "cutSeen": true,
+        "question": " xوy اطبع قسمه 45-100 على شكل متغيرات",
+        "correctAnswerEditor": "let x = 100; let y = 45; console.log(x / y);",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 4,
+        "cutSeen": true,
+        "question": "اكتب; let x = 'Text'; let y = 1; console.log(x + y)",
+        "correctAnswerEditor": "let x = 'Text'; let y = 1; console.log(x + y)",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    },
+    {
+        "stageId": 5,
+        "cutSeen": true,
+        "question": "",
+        "correctAnswerEditor": "",
+        "correctAnswerConsole": "",
+        "userAnswerDetect": {
+            "userAnswer": ""
+        },
+        "correction": "",
+        "completionStage": false
+    }
+]

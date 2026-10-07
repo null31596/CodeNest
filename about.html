@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — CodeNest</title>
+  <style>
+    *{
+      outline: 2px sold red;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#3e044b, #07033b);
+      color: #eaeaea;
+      margin: 0;
+      padding: 40px;
+      line-height: 1.7;
+      
+    }
+    .header{
+      display: flex;
+      height: 30px;
+      align-items:center;
+      justify-content: end;
+      
+    }
+    .header .back{
+      cursor: pointer;
+      font-size: 1.8rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: background 0.3s;
+      position: fixed;
+      
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin-top: 35px;
+      font-size: 1.6rem;
+    }
+    p {
+      opacity: 0.9;
+    }
+    .socials a {
+      display: flex;
+      color: #4da6ff;
+      text-decoration: none;
+      margin: 6px 0;
+      justify-items: center;
+    }
+    .card {
+      background: #34383d60;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="back">🡢</div>
+  </div>
+  <div class="container">
+    <h1>About CodeNest</h1>
+    <p>
+      CodeNest مشروع تعليمي يهدف لتقديم البرمجة بشكل بسيط، مباشر، وتفاعلي. يعتمد على نظام
+      مراحل، تحديات قصيرة، ومكافآت تدفع المستخدم للاستمرار بدون ملل.
+    </p>
+
+    <div class="card">
+      <h2>فكرة CodeNest</h2>
+      <p>
+        بدلاً من الدروس الطويلة، CodeNest يقدم تعلمًا تدريجيًا يشبه الألعاب. كل درس عبارة
+        عن خطوة قصيرة، سريعة، ومصممة بعناية. الفكرة هي أنك تتقدم بدون أن تحس أنك "تدرس".
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>الميزات الحالية</h2>
+      <p>
+        - نظام مراحل مع تحديات متنوعة.
+        <br />
+        - واجهة بسيطة وواضحة.
+        <br />
+     
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>التحديثات القادمة</h2>
+      <p>
+        
+        - توسيع نظام التحديات بنوعيات جديدة.
+        <br />
+        - تحسين المؤثرات الصوتية والرسوميات.
+        <br />
+        - إضافة نظام مستويات يومية (Daily Challenges).
+        <br />
+        - دعم نظام الحسابات وتسجيل التقدم عبر المتصفح.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>روابط المشروع</h2>
+      <div class="socials">
+        <a href=""><img src="icones Photos/icons8-x-30.png" alt=""> X</a>
+        <a href="#"><img src="icones Photos/icons8-facebook-nouveau-30 (1).png" alt="">facebook</a>
+        <a href="https://www.instagram.com/codenest70?igsh=MXV3OGl2aG9ucWNmZA=="><img src="icones Photos/icons8-instagram-30 (1).png" alt="">instagram</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>لماذا CodeNest مختلف؟</h2>
+      <p>
+        لأن الفكرة ليست أن نرمي عليك كود. الهدف أن تتقنه خطوة بخطوة، مع أسلوب بسيط وبعيد عن
+        التعقيد. كل تحديث يضيف شيء يحسن التجربة، وليس مجرد ميزة شكلية.
+      </p>
+    </div>
+  </div>
+</body>
+<script>
+  document.querySelector('.back').addEventListener('click', () => {
+    window.location.href = "CodeNest.html";
+  });
+</script>
+</html>

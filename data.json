@@ -1,0 +1,71 @@
+[
+ {
+  "section0": [
+   {
+    "level0": {
+     "status": "open",
+     "progress": false,
+     "xpAcquired": 50,
+     "robyCode": 100,
+     "RP": 100
+    }
+   },
+   {
+    "level1": {
+     "status": "locked",
+     "progress": false,
+     "xpAcquired": 50,
+     "robyCode": 100,
+     "RP": 100
+    }
+   },
+   {
+    "level2": {
+     "status": "locked",
+     "progress": false,
+     "xpAcquired": 50,
+     "robyCode": 100,
+     "RP": 100
+    }
+   },
+   {
+    "level3": {
+     "status": "locked",
+     "progress": false,
+     "xpAcquired": 50,
+     "robyCode": 100,
+     "RP": 100
+    }
+   },
+   {
+    "level4": {
+     "status": "locked",
+     "progress": false,
+     "xpAcquired": 50,
+     "robyCode": 100,
+     "RP": 100
+    }
+   },
+   {
+    "level5": {
+     "status": "locked",
+     "progress": false,
+     "xpAcquired": 50,
+     "robyCode": 100,
+     "RP": 100
+    }
+   },
+   {
+    "level6": {
+     "status": "locked",
+     "progress": false,
+     "xpAcquired": 50,
+     "robyCode": 100,
+     "RP": 100
+    }
+   }
+  ],
+  "situation": "open",
+  "completion": false
+ }
+]
